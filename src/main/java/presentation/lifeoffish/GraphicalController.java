@@ -173,12 +173,10 @@ public class GraphicalController implements Initializable {
             showdeathMenu();
             gamePane.setOpacity(0.5);
         }
+        informationText.setText(GameLogic.getInformationString());
 
     }
 
-    public void help(ActionEvent e){
-        printHelp();
-    }
 
     public void updateGrid(){
         currentGridPane.getChildren().clear();
@@ -197,6 +195,7 @@ public class GraphicalController implements Initializable {
             }
         }
         updateText();
+
     }
 
     @Override
@@ -227,13 +226,6 @@ public class GraphicalController implements Initializable {
                 "and press help if you need help.");
     }
 
-    public void printHelp(){
-        informationText.setText("You are a fish swimming at sea." +
-                "\nYou must move around to gain score and consume food to not your lose energy." +
-                "\nAvoid obstacles to not lose score." +
-                "\nAvoid enemies at all costs!");
-    }
-
     public void printHighestScore(){
         //highscore.setText(HighScore.highestScore());
     }
@@ -251,8 +243,6 @@ public class GraphicalController implements Initializable {
                 "\nThat means, you probably shouldn't eat it!"+
                 "\nTotal score: " + game.findPlayer().getScore() +
                 "\nTotal turns: "+ game.findPlayer().getTotalTurns());
-
-        informationText.setText(GameLogic.getInformationString());
 
 
     }
@@ -285,7 +275,6 @@ public class GraphicalController implements Initializable {
         hidedeathMenu();
         gamePane.setOpacity(1.0);
         updateGrid();
-        printHelp();
         updateText();
         printHighestScore();
     }
@@ -295,6 +284,7 @@ public class GraphicalController implements Initializable {
         gamePane.setOpacity(1.0);
         hideGame();
         showMenu();
+        flag = true;
     }
 
     public void exitHighscore(ActionEvent e) {
@@ -305,10 +295,12 @@ public class GraphicalController implements Initializable {
     public void exitHelp(ActionEvent e) {
         hideHelp();
     }
-
+    private Boolean flag = false;
     public void play(ActionEvent e) {
-        this.game = new GameLogic();
-        updateGrid();
+        if(flag){
+            this.game = new GameLogic();
+            flag = false;
+        }
         hideMenu();
         showGame();
     }

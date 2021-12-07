@@ -13,6 +13,7 @@ public class HighScore implements Serializable {
     private int score;
     private int totalTurns;
     private int pollutionValue;
+    private static HighScoreComparator sort = new HighScoreComparator();
 
 
     //constructors
@@ -52,11 +53,14 @@ public class HighScore implements Serializable {
         FileOutputStream f = null;
         ObjectOutputStream o = null;
 
+        //Sorts the scores by highest first
+        saves.sort(sort);
+
         try {
             f = new FileOutputStream(file);
             o = new ObjectOutputStream(f);
 
-            for(int i = 0; i < saves.size(); i++){
+            for(int i = 10; i < saves.size(); i++){
                 o.writeObject(saves.get(i));
             }
             f.close();
@@ -93,9 +97,7 @@ public class HighScore implements Serializable {
         }
 
         //Sorts the scores by highest first
-        HighScoreComparator sort = new HighScoreComparator();
         saves.sort(sort);
-
     }
 
     public static String highestScore() {
