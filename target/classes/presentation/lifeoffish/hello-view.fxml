@@ -270,6 +270,87 @@
                         <Font name="System Bold" size="21.0" />
                     </font>
                 </Button>
+            <ImageView fitHeight="86.0" fitWidth="85.0" layoutX="617.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Tuna.png" />
+               </image>
+            </ImageView>
+            <TextFlow fx:id="test1" layoutX="583.0" layoutY="264.0" prefHeight="27.0" prefWidth="46.0" />
+            <Text fill="#351c75" layoutX="643.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You!">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="70.0" fitWidth="46.0" layoutX="669.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Crab.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="46.0" layoutX="618.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/shrimp.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="46.0" fitWidth="46.0" layoutX="606.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Small%20Fish.png" />
+               </image>
+            </ImageView>
+            <Text fill="#351c75" layoutX="614.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Food,  yum!">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="82.0" fitWidth="79.0" layoutX="567.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Shark.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="72.0" layoutX="666.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Killer%20Whale.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="72.0" fitWidth="66.0" layoutX="619.0" layoutY="452.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Octopus.png" />
+               </image>
+            </ImageView>
+            <Text fill="#351c75" layoutX="615.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Predators!">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="66.0" fitWidth="66.0" layoutX="596.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/plastic%20bag.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="66.0" fitWidth="57.0" layoutX="681.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Fishing%20Net.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="79.0" fitWidth="66.0" layoutX="636.0" layoutY="619.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/Fishing%20Hook.png" />
+               </image>
+            </ImageView>
+            <Text fill="#351c75" layoutX="622.0" layoutY="713.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Obstacles!">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#351c75" layoutX="239.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Life of Fish! You are a fish, trying to survive at sea. Your goal is to survive without becoming polluted. Press the arrow buttons to move. Press &quot;help&quot; to get back here." wrappingWidth="298.39999999999986">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#351c75" layoutX="239.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You must move around to gain score and consume food to not your lose energy. Avoid obstacles to not lose score. Avoid enemies at all costs!" wrappingWidth="298.39999999999986">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="deathPane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" visible="false">
