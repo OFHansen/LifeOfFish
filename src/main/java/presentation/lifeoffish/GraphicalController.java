@@ -4,9 +4,11 @@ import Domain.Command;
 import Domain.CommandWords;
 import Domain.GameLogic;
 import Save.HighScore;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +17,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.util.Duration;
 
 
 import java.awt.image.BufferedImage;
@@ -26,10 +28,13 @@ import java.util.ResourceBundle;
 public class GraphicalController implements Initializable {
 
     private GameLogic game = new GameLogic();
+    private FadeTransition ft = new FadeTransition(new Duration(3000));
 
     //Movement in grid with buttons
     private Command movementCommand = null;
     private CommandWords commands = new CommandWords();
+
+    private GridPane currentGridPane;
 
     private int currentLevel = 1;
     private String currentLevelString = ""+currentLevel;
@@ -37,50 +42,46 @@ public class GraphicalController implements Initializable {
     //Binding nodes from scene builder
     @FXML
     private GridPane gPane1,gPane2,gPane3,gPane4,gPane5,gPane6;
-
     @FXML
     private Text informationText;
-
     @FXML
     private Text stats;
-
     @FXML
     private AnchorPane gamePane;
-
     @FXML
     private AnchorPane deathPane;
-
     @FXML
     private AnchorPane mainMenuPane;
-
     @FXML
     private AnchorPane highscorePane;
-
     @FXML
     private AnchorPane helpPane;
-
     @FXML
     private Button next;
-
     @FXML
     private Text highscore;
-
     @FXML
     private Text statsEnd;
-
-    private GridPane currentGridPane;
-
     @FXML
     private Text scoreText;
-
     @FXML
     private Text totalTurnsText;
-
     @FXML
     private Text pollutionValueText;
-
     @FXML
     private Text highscoreDateText;
+    @FXML
+    private Node gameBackground0;
+    @FXML
+    private Node gameBackground1;
+    @FXML
+    private Node gameBackground2;
+    @FXML
+    private Node gameBackground3;
+    @FXML
+    private Node gameBackground4;
+    @FXML
+    private Node gameBackground5;
 
 
     public void up(ActionEvent e){
@@ -132,6 +133,9 @@ public class GraphicalController implements Initializable {
     public void next(ActionEvent e){
 
         if(game.isAlive() && game.getPlayerScore() >= game.scoreToNextLevel()) {
+            ft.setNode(currentBackground());
+            ft.setToValue(0);
+            ft.play();
             System.out.println("NEXT");
             if (currentLevel == 5){
                 currentLevelString = "Final level";
@@ -143,6 +147,24 @@ public class GraphicalController implements Initializable {
             game.goRoom(movementCommand);
             gameLoop();
         }
+    }
+
+    private Node currentBackground(){
+        Node placeholder = gameBackground0;
+
+        if(currentLevel==2){
+            placeholder = gameBackground1;
+        }else if(currentLevel==3){
+            placeholder = gameBackground2;
+        } else if(currentLevel==4){
+            placeholder = gameBackground3;
+        }else if(currentLevel==5){
+            placeholder = gameBackground4;
+        } else if(currentLevel==6){
+            placeholder = gameBackground5;
+        }
+
+        return placeholder;
     }
 
     public void setCurrentGridPane(){
