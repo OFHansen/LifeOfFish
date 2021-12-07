@@ -3,6 +3,7 @@ package presentation.lifeoffish;
 import Domain.Command;
 import Domain.CommandWords;
 import Domain.GameLogic;
+import Save.HighScore;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 
 import java.awt.image.BufferedImage;
@@ -67,6 +69,18 @@ public class GraphicalController implements Initializable {
     private Text statsEnd;
 
     private GridPane currentGridPane;
+
+    @FXML
+    private Text scoreText;
+
+    @FXML
+    private Text totalTurnsText;
+
+    @FXML
+    private Text pollutionValueText;
+
+    @FXML
+    private Text highscoreDateText;
 
 
     public void up(ActionEvent e){
@@ -310,8 +324,26 @@ public class GraphicalController implements Initializable {
     }
 
     public void showHighscore(ActionEvent e) {
+        String[][] saves = HighScore.highscoreFormatning();
+
+        scoreText.setText(highscoreString(saves,0));
+        totalTurnsText.setText(highscoreString(saves,1));
+        pollutionValueText.setText(highscoreString(saves,2));
+        highscoreDateText.setText(highscoreString(saves,3));
         hideMenu();
         showHighscorePane();
+    }
+
+    private String highscoreString(String[][] saves, int i){
+        String placeholder = saves[i][0]+"\n";
+
+        for(int j = 1; j<10; j++){
+            placeholder += saves[i][j];
+            if(j<9){
+                placeholder +="\n";
+            }
+        }
+        return placeholder;
     }
 
     public void hideMenu(){

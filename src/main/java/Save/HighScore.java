@@ -13,6 +13,7 @@ public class HighScore implements Serializable {
     private int score;
     private int totalTurns;
     private int pollutionValue;
+    private Date time;
     private static HighScoreComparator sort = new HighScoreComparator();
 
 
@@ -21,6 +22,7 @@ public class HighScore implements Serializable {
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
+        this.time = new Date();
         if(this.score == 0){
             System.out.println("The score was 0 therefore it has not been saved.");
         } else {
@@ -32,6 +34,7 @@ public class HighScore implements Serializable {
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
+        this.time = new Date();
     }
 
     //methods
@@ -60,7 +63,7 @@ public class HighScore implements Serializable {
             f = new FileOutputStream(file);
             o = new ObjectOutputStream(f);
 
-            for(int i = 10; i < saves.size(); i++){
+            for(int i = 0; i < 10; i++){
                 o.writeObject(saves.get(i));
             }
             f.close();
@@ -117,6 +120,29 @@ public class HighScore implements Serializable {
 
     public int getPollutionValue() {
         return pollutionValue;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public static String[][] highscoreFormatning(){
+        load();
+        String[][] placholder = new String[4][10];
+
+        for(int i = 0; i<10; i++){
+            placholder[0][i] = String.valueOf(saves.get(i).getScore());
+        }
+        for(int i = 0; i<10; i++){
+            placholder[1][i] = String.valueOf(saves.get(i).getPollutionValue());
+        }
+        for(int i = 0; i<10; i++){
+            placholder[2][i] = String.valueOf(saves.get(i).getTotalTurns());
+        }
+        for(int i = 0; i<10; i++){
+            placholder[3][i] = saves.get(i).getTime().getHours()+1+":"+saves.get(i).getTime().getMinutes();
+        }
+        return placholder;
     }
 
     @Override
