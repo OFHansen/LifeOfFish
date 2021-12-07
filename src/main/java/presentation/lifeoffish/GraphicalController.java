@@ -3,6 +3,7 @@ package presentation.lifeoffish;
 import Domain.Command;
 import Domain.CommandWords;
 import Domain.GameLogic;
+import Save.HighScore;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,13 +24,14 @@ import java.util.ResourceBundle;
 
 public class GraphicalController implements Initializable {
 
-    GameLogic game = new GameLogic();
+    private GameLogic game = new GameLogic();
 
     //Movement in grid with buttons
-    Command movementCommand = null;
-    CommandWords commands = new CommandWords();
+    private Command movementCommand = null;
+    private CommandWords commands = new CommandWords();
 
-
+    private int currentLevel = 1;
+    private String currentLevelString = ""+currentLevel;
 
     //Binding nodes from scene builder
     @FXML
@@ -50,7 +50,22 @@ public class GraphicalController implements Initializable {
     private AnchorPane deathPane;
 
     @FXML
+    private AnchorPane mainMenuPane;
+
+    @FXML
+    private AnchorPane highscorePane;
+
+    @FXML
+    private AnchorPane helpPane;
+
+    @FXML
     private Button next;
+
+    @FXML
+    private Text highscore;
+
+    @FXML
+    private Text statsEnd;
 
 
     public void up(ActionEvent e){
@@ -88,7 +103,7 @@ public class GraphicalController implements Initializable {
     }
 
     public void right (ActionEvent event){
-      
+
         if(game.isAlive()) {
             System.out.println("RIGHT");
             movementCommand = new Command(commands.getCommandWord("go"), "right");
@@ -100,9 +115,15 @@ public class GraphicalController implements Initializable {
     }
 
     public void next(ActionEvent e){
-      
+
         if(game.isAlive() && game.getPlayerScore() >= game.scoreToNextLevel()) {
             System.out.println("NEXT");
+            if (currentLevel == 5){
+                currentLevelString = "Final level";
+            } else {
+                currentLevel++;
+                currentLevelString = "" +currentLevel;
+            }
             movementCommand = new Command(commands.getCommandWord("next"), "");
             game.goRoom(movementCommand);
             gameLoop();
@@ -114,10 +135,8 @@ public class GraphicalController implements Initializable {
         updateGrid();
         updateNextButton();
         if(!game.isAlive()){
-            deathPane.setDisable(false);
-            deathPane.setVisible(true);
+            showdeathMenu();
             gamePane.setOpacity(0.5);
-            deathPane.setOpacity(1.0);
         }
 
     }
@@ -162,6 +181,7 @@ public class GraphicalController implements Initializable {
         }
         printWelcome();
         updateStats();
+        printHighestScore();
     }
 
     public void printWelcome(){
@@ -178,10 +198,22 @@ public class GraphicalController implements Initializable {
                 "\nAvoid enemies at all costs!");
     }
 
+    public void printHighestScore(){
+        //highscore.setText(HighScore.highestScore());
+    }
+
     public void updateStats(){
         stats.setText("Score: " + game.findPlayer().getScore() + "/" +game.scoreToNextLevel()+
                 "\nPolution value: " + game.findPlayer().getPollutionValue() +
                 "\nEnergy: " + game.findPlayer().getTurnValue() +
+                "\nTotal turns: "+ game.findPlayer().getTotalTurns() +
+                "\nCurrent level: " + currentLevelString);
+
+        statsEnd.setText("Your fish lived through "+GameLogic.getRoomCount()+ " decades" +
+                "\nWhile your fish tried to survive, the filthy humans were destroying the ocean!"+
+                "\nThat resulted in your fish getting a polution value of: "+game.findPlayer().getPollutionValue() +
+                "\nThat means, you probably shouldn't eat it!"+
+                "\nTotal score: " + game.findPlayer().getScore() +
                 "\nTotal turns: "+ game.findPlayer().getTotalTurns());
 
 
@@ -212,23 +244,83 @@ public class GraphicalController implements Initializable {
 
     public void playAgain(ActionEvent e) {
         this.game = new GameLogic();
-        deathPane.setDisable(true);
-        deathPane.setVisible(false);
+        hidedeathMenu();
         gamePane.setOpacity(1.0);
-        deathPane.setOpacity(0.0);
         updateGrid();
         printHelp();
         updateStats();
+        printHighestScore();
     }
 
     public void mainMenu(ActionEvent e) {
+        hidedeathMenu();
+        gamePane.setOpacity(1.0);
+        hideGame();
+        showMenu();
+    }
+
+    public void exitHighscore(ActionEvent e) {
+        hideHighscore();
+        showMenu();
+    }
+
+    public void exitHelp(ActionEvent e) {
+        hideHelp();
+    }
+
+    public void play(ActionEvent e) {
         this.game = new GameLogic();
+        hideMenu();
+        showGame();
+    }
+
+    public void howToPlay(ActionEvent e) {
+        showHelp();
+    }
+
+    public void showHighscore(ActionEvent e) {
+        hideMenu();
+        showHighscorePane();
+    }
+
+    public void hideMenu(){
+        mainMenuPane.setDisable(true);
+        mainMenuPane.setVisible(false);
+    }
+    public void showMenu(){
+        mainMenuPane.setDisable(false);
+        mainMenuPane.setVisible(true);
+    }
+    public void hideGame(){
+        gamePane.setDisable(true);
+        gamePane.setVisible(false);
+    }
+    public void showGame(){
+        gamePane.setDisable(false);
+        gamePane.setVisible(true);
+    }
+    public void hidedeathMenu(){
         deathPane.setDisable(true);
         deathPane.setVisible(false);
-        gamePane.setOpacity(1.0);
-        deathPane.setOpacity(0.0);
-        updateGrid();
-        printHelp();
-        updateStats();
+    }
+    public void showdeathMenu(){
+        deathPane.setDisable(false);
+        deathPane.setVisible(true);
+    }
+    public void hideHighscore(){
+        highscorePane.setDisable(true);
+        highscorePane.setVisible(false);
+    }
+    public void showHighscorePane(){
+        highscorePane.setDisable(false);
+        highscorePane.setVisible(true);
+    }
+    public void hideHelp(){
+        helpPane.setDisable(true);
+        helpPane.setVisible(false);
+    }
+    public void showHelp(){
+        helpPane.setDisable(false);
+        helpPane.setVisible(true);
     }
 }
