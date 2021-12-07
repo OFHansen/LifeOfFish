@@ -12,14 +12,15 @@ public class HighScore implements Serializable {
     private static ArrayList<HighScore> saves = new ArrayList<>();
     private int score;
     private int totalTurns;
-    private int pollutionValue;
-
+    private double pollutionValue;
+    private Date time;
 
     //constructors
-    public HighScore(int score, int totalTurns, int pollutionValue){
+    public HighScore(int score, int totalTurns, double pollutionValue){
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
+        this.time = new Date();
         if(this.score == 0){
             System.out.println("The score was 0 therefore it has not been saved.");
         } else {
@@ -27,14 +28,15 @@ public class HighScore implements Serializable {
         }
     }
 
-    private HighScore(int score, int totalTurns, int pollutionValue, String dingoBob){
+    private HighScore(int score, int totalTurns, double pollutionValue, String dingoBob){
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
+        this.time = new Date();
     }
 
     //methods
-    private static void clone(int score, int totalTurns, int pollutionValue){
+    private static void clone(int score, int totalTurns, double pollutionValue){
         HighScore placeholder = new HighScore(score,totalTurns,pollutionValue,"");
 
         //Loads the existing HighScore objects saved in Highscore.txt
@@ -98,12 +100,6 @@ public class HighScore implements Serializable {
 
     }
 
-    public static String highestScore() {
-        HighScore.load();
-
-        return saves.get(0).toString();
-    }
-
     public int getScore() {
         return score;
     }
@@ -116,15 +112,18 @@ public class HighScore implements Serializable {
         return pollutionValue;
     }
 
+    public Date getTime() {
+        return time;
+    }
+
     @Override
     public String toString(){
         String placeholder = null;
 
-        placeholder = "Score: " + getScore() + "  Turns used: " + getTotalTurns()
-                + "\nPollution level: " + getPollutionValue();
+        placeholder = "\n\nScore: " + getScore() + "\nTurns used: " + getTotalTurns()
+                + "\nPollution value: " + getPollutionValue() + "\nDate of score: " + getTime();
 
         return placeholder;
     }
 
-    public static void main(String[] args) {}
 }
