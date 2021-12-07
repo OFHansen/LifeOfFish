@@ -3,7 +3,6 @@ package presentation.lifeoffish;
 import Domain.Command;
 import Domain.CommandWords;
 import Domain.GameLogic;
-import Save.HighScore;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -161,7 +160,7 @@ public class GraphicalController implements Initializable {
                 i++;
             }
         }
-        updateStats();
+        updateText();
     }
 
     @Override
@@ -180,7 +179,7 @@ public class GraphicalController implements Initializable {
             }
         }
         printWelcome();
-        updateStats();
+        updateText();
         printHighestScore();
     }
 
@@ -202,7 +201,7 @@ public class GraphicalController implements Initializable {
         //highscore.setText(HighScore.highestScore());
     }
 
-    public void updateStats(){
+    public void updateText(){
         stats.setText("Score: " + game.findPlayer().getScore() + "/" +game.scoreToNextLevel()+
                 "\nPolution value: " + game.findPlayer().getPollutionValue() +
                 "\nEnergy: " + game.findPlayer().getTurnValue() +
@@ -215,6 +214,8 @@ public class GraphicalController implements Initializable {
                 "\nThat means, you probably shouldn't eat it!"+
                 "\nTotal score: " + game.findPlayer().getScore() +
                 "\nTotal turns: "+ game.findPlayer().getTotalTurns());
+
+        informationText.setText(GameLogic.getInformationString());
 
 
     }
@@ -248,7 +249,7 @@ public class GraphicalController implements Initializable {
         gamePane.setOpacity(1.0);
         updateGrid();
         printHelp();
-        updateStats();
+        updateText();
         printHighestScore();
     }
 

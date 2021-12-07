@@ -11,6 +11,7 @@ public class GameLogic {
     private Room currentRoom;
     private static int[] scoreToNextLevel = {60,140,240,340,440,580};
     private static int roomCount;
+    public static String informationString;
 
     //Constructor
     public GameLogic() {
@@ -159,6 +160,14 @@ public class GameLogic {
                 break;
         }
         return enemyMove;
+    }
+
+    public static String getInformationString(){
+        return informationString;
+    }
+
+    public static void setInformationString(String text){
+        informationString = text;
     }
 
     public static int[] getScoreToNextLevel() {
