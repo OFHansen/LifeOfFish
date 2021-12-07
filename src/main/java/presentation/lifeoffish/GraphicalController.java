@@ -270,6 +270,7 @@ public class GraphicalController implements Initializable {
 
     public void play(ActionEvent e) {
         this.game = new GameLogic();
+        updateGrid();
         hideMenu();
         showGame();
     }
