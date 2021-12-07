@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.lifeoffish.GraphicalController">
+   <children>
+      <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: #5bcadd#5bcadd;">
+          <children>
+              <ImageView fitHeight="560.0" fitWidth="780.0" layoutX="110.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" scaleY="1.21">
+                  <image>
+                      <Image url="@../../Images/background.png" />
+                  </image>
+            </ImageView>
+              <GridPane fx:id="gPane1" alignment="CENTER" cache="true" layoutX="100.0" layoutY="10.0" prefHeight="580.0" prefWidth="800.0" style="-fx-border-color: #351c75; -fx-background-color: 0; -fx-border-radius: 20; -fx-border-width: 10; -fx-background-radius: 40;">
+                  <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  </rowConstraints>
+              </GridPane>
+            <GridPane fx:id="gPane2" alignment="CENTER" cache="true" layoutX="100.0" layoutY="8.0" prefHeight="580.0" prefWidth="800.0" style="-fx-border-color: #351c75; -fx-background-color: 0; -fx-border-radius: 20; -fx-border-width: 10; -fx-background-radius: 40;" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="gPane3" alignment="CENTER" cache="true" layoutX="100.0" layoutY="8.0" prefHeight="580.0" prefWidth="800.0" style="-fx-border-color: #351c75; -fx-background-color: 0; -fx-border-radius: 20; -fx-border-width: 10; -fx-background-radius: 40;" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="gPane4" alignment="CENTER" cache="true" layoutX="100.0" layoutY="8.0" prefHeight="580.0" prefWidth="800.0" style="-fx-border-color: #351c75; -fx-background-color: 0; -fx-border-radius: 20; -fx-border-width: 10; -fx-background-radius: 40;" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="gPane5" alignment="CENTER" cache="true" layoutX="100.0" layoutY="8.0" prefHeight="580.0" prefWidth="800.0" style="-fx-border-color: #351c75; -fx-background-color: 0; -fx-border-radius: 20; -fx-border-width: 10; -fx-background-radius: 40;" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="gPane6" alignment="CENTER" cache="true" layoutX="100.0" layoutY="10.0" prefHeight="580.0" prefWidth="800.0" style="-fx-border-color: #351c75; -fx-background-color: 0; -fx-border-radius: 20; -fx-border-width: 10; -fx-background-radius: 40;" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+            </GridPane>
+              <GridPane alignment="CENTER" layoutX="380.0" layoutY="590.0" prefHeight="260.0" prefWidth="260.0" AnchorPane.leftAnchor="370.0">
+                  <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                      <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" scaleX="0.8" scaleY="0.9" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <image>
+                              <Image url="@../../Images/Tuna.png" />
+                          </image>
+                  </ImageView>
+                      <Button fx:id="up" alignment="TOP_CENTER" layoutX="39.0" layoutY="148.0" mnemonicParsing="false" onAction="#up" rotate="270.0" scaleX="4.0" scaleY="3.0" style="-fx-background-color: #ffd194; -fx-border-color: #351c75; -fx-shape: &quot;M 0 -3.5 v 7 l 4 -3.5 z&quot;; -fx-background-insets: 0 0 0 0, 0, 1, 2; -fx-border-radius: 2;" GridPane.columnIndex="1" />
+                      <Button mnemonicParsing="false" onAction="#help" style="-fx-border-color: #351c75; -fx-border-radius: 40; -fx-border-width: 5; -fx-background-color: #ffd194; -fx-background-radius: 60; -fx-background-insets: -fx-background-insets: 0 0 0 0, 0, 1, 2; -fx-background-insets: 0 0 0 0, 0, 1, 2;" text="Help" textFill="#351c75">
+                          <font>
+                              <Font name="System Bold" size="21.0" />
+                          </font>
+                  </Button>
+                      <Button fx:id="next" mnemonicParsing="false" onAction="#next" opacity="0.5" style="-fx-border-width: 5; -fx-border-radius: 40; -fx-border-color: #351c75; -fx-background-color: #ffd194; -fx-background-radius: 60; -fx-background-insets: -fx-background-insets: 0 0 0 0, 0, 1, 2; -fx-background-insets: 0 0 0 0, 0, 1, 2;" text="Next" textFill="#351c75" GridPane.columnIndex="2">
+                          <font>
+                              <Font name="System Bold" size="21.0" />
+                          </font>
+                  </Button>
+                      <Button fx:id="right" alignment="CENTER_RIGHT" layoutX="121.0" layoutY="36.0" mnemonicParsing="false" onAction="#right" scaleX="4.0" scaleY="3.0" style="-fx-background-color: #ffd194; -fx-border-color: #351c75; -fx-shape: &quot;M 0 -3.5 v 7 l 4 -3.5 z&quot;; -fx-background-insets: 0 0 0 0, 0, 1, 2;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                      <Button fx:id="left" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#left" rotate="180.0" scaleX="4.0" scaleY="3.0" style="-fx-background-color: #ffd194; -fx-border-color: #351c75; -fx-shape: &quot;M 0 -3.5 v 7 l 4 -3.5 z&quot;; -fx-background-insets: 0 0 0 0, 0, 1, 2;" GridPane.rowIndex="1" />
+                      <Button fx:id="down" alignment="TOP_CENTER" layoutX="41.0" layoutY="116.0" mnemonicParsing="false" onAction="#down" rotate="90.0" scaleX="4.0" scaleY="3.0" style="-fx-background-color: #ffd194; -fx-border-color: #351c75; -fx-shape: &quot;M 0 -3.5 v 7 l 4 -3.5 z&quot;; -fx-background-insets: 0 0 0 0, 0, 1, 2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  </children>
+              </GridPane>
+              <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="600.0" prefHeight="240.0" prefWidth="360.0" style="-fx-border-color: #351c75#351c75; -fx-border-radius: 40; -fx-border-width: 10; -fx-background-color: #ffd194; -fx-background-radius: 50;" textFill="#351c75">
+                  <padding>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  </padding>
+                  <font>
+                      <Font name="System Bold" size="21.0" />
+                  </font>
+            </Label>
+              <Label alignment="TOP_LEFT" layoutX="600.0" layoutY="600.0" prefHeight="240.0" prefWidth="360.0" style="-fx-border-color: #351c75; -fx-border-radius: 40; -fx-border-width: 10; -fx-background-radius: 50; -fx-background-color: #ffd194;" textFill="#351c75" AnchorPane.leftAnchor="630.0">
+                  <padding>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  </padding>
+                  <font>
+                      <Font name="System Bold" size="21.0" />
+                  </font>
+            </Label>
+              <Label layoutX="660.0" layoutY="752.0" text="Highscore:" textFill="#351c75">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Label>
+            <Text fx:id="highscore" fill="#351c75" layoutX="660.0" layoutY="795.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HighScore">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+              <TextFlow fx:id="test" layoutX="35.0" layoutY="625.0" prefHeight="190.0" prefWidth="311.0">
+                  <children>
+                      <Text fx:id="informationText" fill="#351c75" strokeType="OUTSIDE" strokeWidth="0.0" text="InfoText">
+                          <font>
+                              <Font name="System Bold" size="18.0" />
+                          </font>
+                      </Text>
+                  </children>
+            </TextFlow>
+              <TextFlow layoutX="660.0" layoutY="625.0" prefHeight="120.0" prefWidth="298.0">
+                  <children>
+                      <Text fx:id="stats" fill="#351c75" strokeType="OUTSIDE" strokeWidth="0.0" text="StatsText" wrappingWidth="164.0390625">
+                          <font>
+                              <Font name="System Bold" size="18.0" />
+                          </font>
+                      </Text>
+                  </children>
+              </TextFlow>
+          </children>
+          <effect>
+              <InnerShadow choke="0.71" radius="12.21" width="29.84">
+                  <color>
+                      <Color red="0.24538560211658478" green="0.14735624194145203" blue="0.5394737124443054" />
+                  </color>
+              </InnerShadow>
+          </effect>
+      </AnchorPane>
+      <AnchorPane fx:id="deathPane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="850.0" prefWidth="1000.0">
+         <children>
+            <Label fx:id="deathMenuTitle" alignment="TOP_CENTER" layoutX="320.0" layoutY="240.0" prefHeight="420.0" prefWidth="360.0" style="-fx-border-color: #351c75#351c75; -fx-border-radius: 40; -fx-border-width: 10; -fx-background-color: #ffd194; -fx-background-radius: 50;" text="You died!" textFill="#351c75">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+            <Button layoutX="331.0" layoutY="530.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="55.0" prefWidth="338.0" style="-fx-border-width: 5; -fx-border-radius: 40; -fx-border-color: #351c75; -fx-background-color: #ffd194; -fx-background-radius: 60; -fx-background-insets: -fx-background-insets: 0 0 0 0, 0, 1, 2; -fx-background-insets: 0 0 0 0, 0, 1, 2;" text="Play Again" textFill="#351c75">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <Button layoutX="331.0" layoutY="590.0" mnemonicParsing="false" onAction="#mainMenu" prefHeight="55.0" prefWidth="338.0" style="-fx-border-width: 5; -fx-border-radius: 40; -fx-border-color: #351c75; -fx-background-color: #ffd194; -fx-background-radius: 60; -fx-background-insets: -fx-background-insets: 0 0 0 0, 0, 1, 2; -fx-background-insets: 0 0 0 0, 0, 1, 2;" text="Main Menu" textFill="#351c75">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <TextFlow layoutX="330.0" layoutY="320.0" prefHeight="200.0" prefWidth="340.0" textAlignment="CENTER">
+               <children>
+                  <Text fx:id="statsEnd" fill="#351c75" strokeType="OUTSIDE" strokeWidth="0.0" text="StatsText" wrappingWidth="164.0390625">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </TextFlow>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
