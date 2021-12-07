@@ -10,11 +10,11 @@ public class Obstacles extends GameObjects{
         Obstacles placeholder = null;
 
         if(type == 0){
-            placeholder = new Obstacles("Fishing Net",4,0);
+            placeholder = new Obstacles("Fishing Net",-3,0);
         }else if(type == 1){
-            placeholder = new Obstacles("Fishing Hook",4,0);
+            placeholder = new Obstacles("Fishing Hook",-4,0);
         }else if(type == 2){
-            placeholder = new Obstacles("plastic bag",2,20);
+            placeholder = new Obstacles("plastic bag",-2,20);
         }
 
         return placeholder;

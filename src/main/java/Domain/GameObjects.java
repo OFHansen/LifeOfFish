@@ -22,7 +22,7 @@ public class GameObjects {
         this.turnValue = turnValue;
         this.symbol = symbol;
         this.pollutionValue = pollutionValue;
-        this.image = getImage(name);
+        this.image = getObjectImage(name);
     }
 
     //Methods
@@ -56,7 +56,7 @@ public class GameObjects {
 
     public String getSymbol(){return symbol;}
 
-    private BufferedImage getImage(String name){
+    private BufferedImage getObjectImage(String name){
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File("src\\main\\resources\\Images\\"+name+".png"));

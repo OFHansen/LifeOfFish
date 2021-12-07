@@ -100,6 +100,7 @@ public class HighScore implements Serializable {
 
     public static String highestScore() {
         HighScore.load();
+        saves.add(new HighScore(0,0,0));
 
         return saves.get(0).toString();
     }
@@ -112,7 +113,7 @@ public class HighScore implements Serializable {
         return totalTurns;
     }
 
-    public double getPollutionValue() {
+    public int getPollutionValue() {
         return pollutionValue;
     }
 
