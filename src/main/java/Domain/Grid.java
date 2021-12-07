@@ -185,6 +185,7 @@ public class Grid {
         try {
             placeholder = this.grid[entityPosition.get(0) + row][entityPosition.get(1) + column];
         } catch (IndexOutOfBoundsException ex){
+            GameLogic.setInformationString("Your fish tried to move, but were pushed back by the current.");
             throw new IllegalMoveException("This is a illegal move, try something else.");
         }
 
@@ -211,50 +212,50 @@ public class Grid {
                 ((Player) entity).addTurns(placeholder.getTurnValue());
                 ((Player) entity).addPollutionValue(placeholder.getPollutionValue());
 
-                System.out.println("You ate a " + placeholder.getName() + ".");
-                System.out.println("For this action you have gained some energy.");
-                System.out.println("...and maybe something more.");
+                GameLogic.setInformationString("You ate a " + placeholder.getName() + "." + "" +
+                        "\nFor this action you have gained some energy." + "" +
+                        "\n...and maybe something more.");
 
             } else if (placeholder instanceof Obstacles) { //checks if the player collided with an obstacle
                 ((Player) entity).addTurns(placeholder.getTurnValue());
                 ((Player) entity).addPollutionValue(placeholder.getPollutionValue());
+                GameLogic.setInformationString("You accidentally ate a " + placeholder.getName() + ".");
 
-                System.out.println("You accidentally ate a " + placeholder.getName() + ".");
                 if(((Player) entity).getTurnValue() <= 0){
                     ((Player) entity).triggerDeath();
 
-                    System.out.println("You have eaten too much waste, therefore you have run out of energy.");
+                    GameLogic.setInformationString("You have eaten too much waste, therefore you have run out of energy.");
                 } else {
-                    System.out.println("For this action you will lose some energy.");
-                    System.out.println("...and maybe something more. ");
+                    GameLogic.setInformationString("For this action you will lose some energy. " +
+                            "\n...and maybe something more. ");
                 }
             } else if (placeholder instanceof Water) { //checks if the player collided with some water
                 ((Player) entity).addPollutionValue(placeholder.getPollutionValue());
 
-                System.out.println("There is nothing.");
+                GameLogic.setInformationString("There is nothing.");
                 if(((Player) entity).getTurnValue() <= 0){
                     ((Player) entity).triggerDeath();
 
-                    System.out.println("You have not eaten enough food and have thus run out of energy.");
+                    GameLogic.setInformationString("You have not eaten enough food and have thus run out of energy.");
                 } else {
-                    System.out.println("This action will yield you nothing.");
-                    System.out.println("... or maybe it will.");
+                    GameLogic.setInformationString("This action will yield you nothing." +
+                            "\n... or maybe it will.");
                 }
 
             } else if (placeholder instanceof Enemies) { //checks if the player collided with an enemy
                 ((Player) entity).triggerDeath();
 
-                System.out.println("Too bad.");
-                System.out.println("You have confronted an " + placeholder.getName() + ".");
-                System.out.println("This action has resulted in your death.");
+                GameLogic.setInformationString("Too bad." +
+                        "\nYou have confronted a " + placeholder.getName() + "." +
+                        "\nThis action has resulted in your death.");
             }
         } else if (entity instanceof Enemies) { //checks if the entity is an enemy
             if (placeholder instanceof Player) { //checks if the enemy collided with the player
                 ((Player)placeholder).triggerDeath();
 
-                System.out.println("Too bad.");
-                System.out.println("an " + entity.getName() + " has caught you.");
-                System.out.println("This action has resulted in your death.");
+                GameLogic.setInformationString("Too bad" +
+                        "\nA " + entity.getName() + " has caught you." +
+                        "\nThis action has resulted in your death.");
                 throw new PlayerIsDeadException("lol");
             } else if(placeholder instanceof Enemies){//checks if the enemy collided with another enemy
                 this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
