@@ -46,17 +46,17 @@ public class Grid {
         Random decider = new Random();
         //loop that creates enemies and places them in the array
         for (int i = 0; i < enemiesQuantity; i++) {
-            objectList[placeCounter] = Enemies.create(decider.nextInt(2));
+            objectList[placeCounter] = Enemies.create(decider.nextInt(3));
             placeCounter++;
         }
         //loop that creates food and places them in the array
         for (int i = 0; i < foodQuantity; i++) {
-            objectList[placeCounter] = Food.create(decider.nextInt(2));
+            objectList[placeCounter] = Food.create(decider.nextInt(3));
             placeCounter++;
         }
         //loop that creates obstacles and places them in the array
         for (int i = 0; i < obstaclesQuantity; i++) {
-            objectList[placeCounter] = Obstacles.create(decider.nextInt(2));
+            objectList[placeCounter] = Obstacles.create(decider.nextInt(3));
             placeCounter++;
         }
 
