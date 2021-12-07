@@ -34,7 +34,7 @@ public class GraphicalController implements Initializable {
 
     //Binding nodes from scene builder
     @FXML
-    private GridPane gPane;
+    private GridPane gPane1,gPane2,gPane3,gPane4,gPane5,gPane6;
 
     @FXML
     private Text informationText;
@@ -65,6 +65,8 @@ public class GraphicalController implements Initializable {
 
     @FXML
     private Text statsEnd;
+
+    private GridPane currentGridPane;
 
 
     public void up(ActionEvent e){
@@ -129,7 +131,41 @@ public class GraphicalController implements Initializable {
         }
     }
 
+    public void setCurrentGridPane(){
+
+        if(currentLevel == 1){
+            currentGridPane = gPane1;
+            currentGridPane.setVisible(true);
+
+        } else if(currentLevel == 2){
+            currentGridPane = gPane2;
+            currentGridPane.setVisible(true);
+            gPane1.setVisible(false);
+
+        }else if(currentLevel == 3){
+            currentGridPane = gPane3;
+            currentGridPane.setVisible(true);
+            gPane2.setVisible(false);
+
+        }else if(currentLevel == 4){
+            currentGridPane = gPane4;
+            currentGridPane.setVisible(true);
+            gPane3.setVisible(false);
+
+        }else if(currentLevel == 5){
+            currentGridPane = gPane5;
+            currentGridPane.setVisible(true);
+            gPane4.setVisible(false);
+
+        } else{
+            currentGridPane = gPane6;
+            currentGridPane.setVisible(true);
+            gPane5.setVisible(false);
+        }
+    }
+
     public void gameLoop(){
+        setCurrentGridPane();
         game.getMaintenance();
         updateGrid();
         updateNextButton();
@@ -145,7 +181,7 @@ public class GraphicalController implements Initializable {
     }
 
     public void updateGrid(){
-        gPane.getChildren().clear();
+        currentGridPane.getChildren().clear();
 
         ArrayList<BufferedImage> placeholder = game.listOfImages();
         ArrayList<Image> images = new ArrayList();
@@ -156,7 +192,7 @@ public class GraphicalController implements Initializable {
         int i = 0;
         for (int column = 0; column < game.getMap().length; column++) {
             for (int row = 0; row < game.getMap()[column].length; row++) {
-                gPane.add(new ImageView(images.get(i)),column,row);
+                currentGridPane.add(new ImageView(images.get(i)),column,row);
                 i++;
             }
         }
@@ -171,10 +207,11 @@ public class GraphicalController implements Initializable {
             images.add(convertToFxImage(placeholder.get(i)));
         }
 
+        setCurrentGridPane();
         int i = 0;
         for (int column = 0; column < game.getMap().length; column++) {
             for (int row = 0; row < game.getMap()[column].length; row++) {
-                gPane.add(new ImageView(images.get(i)),column,row);
+                currentGridPane.add(new ImageView(images.get(i)),column,row);
                 i++;
             }
         }

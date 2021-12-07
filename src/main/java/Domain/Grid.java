@@ -185,7 +185,7 @@ public class Grid {
         try {
             placeholder = this.grid[entityPosition.get(0) + row][entityPosition.get(1) + column];
         } catch (IndexOutOfBoundsException ex){
-            GameLogic.setInformationString("Your fish tried to move, but were pushed back by the current.");
+            GameLogic.setInformationString("Your fish tried to move, but was pushed back by the current.");
             throw new IllegalMoveException("This is a illegal move, try something else.");
         }
 
