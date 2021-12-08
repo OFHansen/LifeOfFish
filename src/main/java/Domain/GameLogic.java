@@ -11,7 +11,6 @@ public class GameLogic {
     private Room currentRoom;
     private static int[] scoreToNextLevel = {1,2,3,4,5,20};
     private static int roomCount;
-    public static String informationString;
 
     //Constructor
     public GameLogic() {
@@ -39,20 +38,9 @@ public class GameLogic {
     }
 
     //Movement for player
-    public void goInGrid(String direction) {
+    public String goInGrid(String direction) throws PlayerIsDeadException, IllegalMoveException {
+       return movement(direction);
 
-        //Checks if player forgot to write second word wth go command
-        if (direction == null) {
-            System.out.println("Go where?");
-            return;
-        }
-
-        //Checks weather or not the player has made an illegal move
-        try {
-            movement(direction);
-        } catch (IllegalMoveException ex) {
-            System.out.println(ex);
-        } catch (PlayerIsDeadException ex){}
     }
 
 
@@ -150,14 +138,6 @@ public class GameLogic {
         return enemyMove;
     }
 
-    public static String getInformationString(){
-        return informationString;
-    }
-
-    public static void setInformationString(String text){
-        informationString = text;
-    }
-
     public static int[] getScoreToNextLevel() {
         return scoreToNextLevel;
     }
@@ -202,8 +182,8 @@ public class GameLogic {
         return currentRoom.getLongDescription();
     }
 
-    private void movement(String direction) throws IllegalMoveException, PlayerIsDeadException {
-        currentRoom.getMap().gridMovement(findPlayer(), direction);
+    private String movement(String direction) throws IllegalMoveException, PlayerIsDeadException {
+        return currentRoom.getMap().gridMovement(findPlayer(), direction);
     }
 
     public Player findPlayer() {

@@ -1,6 +1,8 @@
 package presentation.lifeoffish;
 
 import Domain.GameLogic;
+import Domain.IllegalMoveException;
+import Domain.PlayerIsDeadException;
 import Save.HighScore;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -28,6 +30,7 @@ public class GraphicalController implements Initializable {
 
     private GameLogic game = new GameLogic();
     private FadeTransition ft = new FadeTransition(new Duration(3000));
+    private String actionInformation;
 
     private GridPane currentGridPane;
 
@@ -87,7 +90,13 @@ public class GraphicalController implements Initializable {
     public void up(ActionEvent e){
 
         if(game.isAlive()) {
-            game.goInGrid("up");
+            try {
+                 actionInformation = game.goInGrid("up");
+            } catch (PlayerIsDeadException ex) {
+                gameLoop();
+            }catch (IllegalMoveException ex){
+                informationText.setText(ex.getMessage());
+            }
             game.enemyTurn();
             gameLoop();
         }
@@ -96,7 +105,13 @@ public class GraphicalController implements Initializable {
     public void down(ActionEvent e){
 
         if(game.isAlive()) {
-            game.goInGrid("down");
+            try {
+               actionInformation = game.goInGrid("down");
+            } catch (PlayerIsDeadException ex) {
+                gameLoop();
+            }catch (IllegalMoveException ex){
+                informationText.setText(ex.getMessage());
+            }
             game.enemyTurn();
             gameLoop();
         }
@@ -105,7 +120,13 @@ public class GraphicalController implements Initializable {
     public void left(ActionEvent e){
 
         if(game.isAlive()) {
-            game.goInGrid("left");
+            try {
+                actionInformation = game.goInGrid("left");
+            } catch (PlayerIsDeadException ex) {
+                gameLoop();
+            }catch (IllegalMoveException ex){
+                informationText.setText(ex.getMessage());
+            }
             game.enemyTurn();
             gameLoop();
 
@@ -115,7 +136,14 @@ public class GraphicalController implements Initializable {
     public void right (ActionEvent event){
 
         if(game.isAlive()) {
-            game.goInGrid("right");
+            try {
+                actionInformation = game.goInGrid("right");
+            } catch (PlayerIsDeadException ex) {
+                gameLoop();
+            } catch (IllegalMoveException ex){
+                informationText.setText(ex.getMessage());
+            }
+
             game.enemyTurn();
             gameLoop();
         }
@@ -233,7 +261,7 @@ public class GraphicalController implements Initializable {
             showdeathMenu();
             gamePane.setOpacity(0.5);
         }
-        informationText.setText(GameLogic.getInformationString());
+        informationText.setText(actionInformation);
 
     }
 
@@ -346,7 +374,7 @@ public class GraphicalController implements Initializable {
         hidedeathMenu();
         gamePane.setOpacity(1.0);
         updateGrid();
-        updateText();
+        printWelcome();
         printHighestScore();
         game.resetRoomCount();
         currentLevel = 1;
@@ -382,6 +410,7 @@ public class GraphicalController implements Initializable {
     public void play(ActionEvent e) {
         if(flag){
             this.game = new GameLogic();
+            printWelcome();
             flag = false;
         }
         hideMenu();
