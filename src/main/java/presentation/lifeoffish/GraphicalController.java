@@ -331,15 +331,15 @@ public class GraphicalController implements Initializable {
 
     public void updateText(){
         stats.setText("Score: " + game.findPlayer().getScore() + "/" +game.scoreToNextLevel()+
-                "\nPolution value: " + game.findPlayer().getPollutionValue() +
+                "\nPollution value: " + game.findPlayer().getPollutionValue() +
                 "\nEnergy: " + game.findPlayer().getTurnValue() +
                 "\nTotal turns: "+ game.findPlayer().getTotalTurns() +
                 "\nCurrent level: " + currentLevelString);
 
         statsEnd.setText("Your fish lived through "+GameLogic.getRoomCount()+ " decades" +
                 "\nWhile your fish tried to survive, the filthy humans were destroying the ocean!"+
-                "\nThat resulted in your fish getting a polution value of: "+game.findPlayer().getPollutionValue() +
-                "\nThat means, you probably shouldn't eat it!"+
+                "\nThat resulted in your fish getting a pollution value of: "+game.findPlayer().getPollutionValue() +
+                "\nRemember that when you buy products from the fishing industry."+
                 "\nTotal score: " + game.findPlayer().getScore() +
                 "\nTotal turns: "+ game.findPlayer().getTotalTurns());
 
