@@ -1,7 +1,5 @@
 package presentation.lifeoffish;
 
-import Domain.Command;
-import Domain.CommandWords;
 import Domain.GameLogic;
 import Save.HighScore;
 import javafx.animation.FadeTransition;
@@ -29,10 +27,6 @@ public class GraphicalController implements Initializable {
 
     private GameLogic game = new GameLogic();
     private FadeTransition ft = new FadeTransition(new Duration(3000));
-
-    //Movement in grid with buttons
-    private Command movementCommand = null;
-    private CommandWords commands = new CommandWords();
 
     private GridPane currentGridPane;
 
@@ -87,9 +81,7 @@ public class GraphicalController implements Initializable {
     public void up(ActionEvent e){
 
         if(game.isAlive()) {
-            System.out.println("UP");
-            movementCommand = new Command(commands.getCommandWord("go"), "up");
-            game.goInGrid(movementCommand);
+            game.goInGrid("up");
             game.enemyTurn();
             gameLoop();
         }
@@ -98,9 +90,7 @@ public class GraphicalController implements Initializable {
     public void down(ActionEvent e){
 
         if(game.isAlive()) {
-            System.out.println("DOWN");
-            movementCommand = new Command(commands.getCommandWord("go"), "down");
-            game.goInGrid(movementCommand);
+            game.goInGrid("down");
             game.enemyTurn();
             gameLoop();
         }
@@ -109,9 +99,7 @@ public class GraphicalController implements Initializable {
     public void left(ActionEvent e){
 
         if(game.isAlive()) {
-            System.out.println("LEFT");
-            movementCommand = new Command(commands.getCommandWord("go"), "left");
-            game.goInGrid(movementCommand);
+            game.goInGrid("left");
             game.enemyTurn();
             gameLoop();
 
@@ -121,9 +109,7 @@ public class GraphicalController implements Initializable {
     public void right (ActionEvent event){
 
         if(game.isAlive()) {
-            System.out.println("RIGHT");
-            movementCommand = new Command(commands.getCommandWord("go"), "right");
-            game.goInGrid(movementCommand);
+            game.goInGrid("right");
             game.enemyTurn();
             gameLoop();
         }
@@ -143,8 +129,7 @@ public class GraphicalController implements Initializable {
                 currentLevel++;
                 currentLevelString = "" +currentLevel;
             }
-            movementCommand = new Command(commands.getCommandWord("next"), "");
-            game.goRoom(movementCommand);
+            game.goRoom();
             gameLoop();
         }
     }
