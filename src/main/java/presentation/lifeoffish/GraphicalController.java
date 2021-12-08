@@ -95,7 +95,7 @@ public class GraphicalController implements Initializable {
             } catch (PlayerIsDeadException ex) {
                 gameLoop();
             }catch (IllegalMoveException ex){
-                informationText.setText(ex.getMessage());
+                actionInformation = ex.getMessage();
             }
             game.enemyTurn();
             gameLoop();
@@ -110,7 +110,7 @@ public class GraphicalController implements Initializable {
             } catch (PlayerIsDeadException ex) {
                 gameLoop();
             }catch (IllegalMoveException ex){
-                informationText.setText(ex.getMessage());
+                actionInformation = ex.getMessage();
             }
             game.enemyTurn();
             gameLoop();
@@ -125,7 +125,7 @@ public class GraphicalController implements Initializable {
             } catch (PlayerIsDeadException ex) {
                 gameLoop();
             }catch (IllegalMoveException ex){
-                informationText.setText(ex.getMessage());
+                actionInformation = ex.getMessage();
             }
             game.enemyTurn();
             gameLoop();
@@ -141,7 +141,7 @@ public class GraphicalController implements Initializable {
             } catch (PlayerIsDeadException ex) {
                 gameLoop();
             } catch (IllegalMoveException ex){
-                informationText.setText(ex.getMessage());
+                actionInformation = ex.getMessage();
             }
 
             game.enemyTurn();
@@ -374,7 +374,6 @@ public class GraphicalController implements Initializable {
         hidedeathMenu();
         gamePane.setOpacity(1.0);
         updateGrid();
-        printWelcome();
         printHighestScore();
         game.resetRoomCount();
         currentLevel = 1;
@@ -382,6 +381,7 @@ public class GraphicalController implements Initializable {
         next.setText("Next");
         gameLoop();
         resetBackgrounds();
+        printWelcome();
     }
 
     public void mainMenu(ActionEvent e) {
@@ -410,6 +410,7 @@ public class GraphicalController implements Initializable {
     public void play(ActionEvent e) {
         if(flag){
             this.game = new GameLogic();
+            updateGrid();
             printWelcome();
             flag = false;
         }
