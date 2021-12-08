@@ -9,7 +9,7 @@ import java.util.Random;
 public class GameLogic {
     //Attributes
     private Room currentRoom;
-    private static int[] scoreToNextLevel = {1,2,3,4,5,20};
+    private static int[] scoreToNextLevel = {60,120,240,360,480,600};
     private static int roomCount;
 
     //Constructor
