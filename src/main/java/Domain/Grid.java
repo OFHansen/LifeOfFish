@@ -154,26 +154,22 @@ public class Grid {
     }
 
     //Movement in grid
-    public void gridMovement(GameObjects entity, Command direction) throws IllegalMoveException, IllegalCommandException,
+    public void gridMovement(GameObjects entity, String direction) throws IllegalMoveException,
             PlayerIsDeadException {
 
         //2 values that represent where the entity is going
         int row = 0;
         int column = 0;
 
-        //manipulation of the 2 values according to the action
-        if(!direction.getSecondWord().equals("right")&&!direction.getSecondWord().equals("left")&&
-                !direction.getSecondWord().equals("up")&&!direction.getSecondWord().equals("down")) {
-            throw new IllegalMoveException("spell better lol");
-        }
 
-        if (direction.getSecondWord().equals("right")) {
+
+        if (direction.equals("right")) {
             row = 1;
-        } else if (direction.getSecondWord().equals("left")) {
+        } else if (direction.equals("left")) {
             row = -1;
-        } else if (direction.getSecondWord().equals("up")) {
+        } else if (direction.equals("up")) {
             column = -1;
-        } else if (direction.getSecondWord().equals("down")) {
+        } else if (direction.equals("down")) {
             column = 1;
         }
 
