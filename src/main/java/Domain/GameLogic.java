@@ -73,19 +73,12 @@ public class GameLogic {
         roomCount++;
     }
 
-    public void resetRoomCount(){roomCount = 0;}
+    public void resetRoomCount(){
+        roomCount = 0;
+    }
 
 
     //Sets quit to true, unless player wrote secondword with quit
-    public boolean quit(Command command) {
-        if (command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        } else {
-            findPlayer().triggerDeath(); //saves the current score in case the player quits
-            return true;
-        }
-    }
 
 
     //method that makes all enemies move
