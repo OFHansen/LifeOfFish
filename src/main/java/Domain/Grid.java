@@ -188,10 +188,11 @@ public class Grid {
         this.grid[entityPosition.get(0) + row][entityPosition.get(1) + column] = entity;
 
         //places water where original the entity was
+        this.grid[entityPosition.get(0)][entityPosition.get(1)] = new Water();
+        
         if(entity instanceof Enemies) {
+            if(placeholder instanceof Enemies)
             this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
-        }else{
-            this.grid[entityPosition.get(0)][entityPosition.get(1)] = new Water();
         }
         if(entity instanceof Player){
             if(!(findPlayer().getScore() >= GameLogic.getScoreToNextLevel()[GameLogic.getRoomCount()])){

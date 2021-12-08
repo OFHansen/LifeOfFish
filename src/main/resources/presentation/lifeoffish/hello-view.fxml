@@ -366,6 +366,14 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
+            <Button layoutX="674.0" layoutY="46.0" mnemonicParsing="false" onAction="#clearScore" prefHeight="55.0" prefWidth="211.0" style="-fx-border-width: 5; -fx-border-radius: 40; -fx-border-color: #351c75; -fx-background-color: #ffd194; -fx-background-radius: 60; -fx-background-insets: 0 0 0 0, 0, 1, 2; -fx-background-insets: 0 0 0 0, 0, 1, 2;" text="Clear all scores" textFill="#351c75">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="helpPane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" visible="false">

@@ -157,7 +157,6 @@ public class GraphicalController implements Initializable {
             ft.setNode(currentBackground());
             ft.setToValue(0);
             ft.play();
-            System.out.println("NEXT");
             if (currentLevel == 5){
                 currentLevelString = "Final level";
                 next.setText("End");
@@ -166,7 +165,7 @@ public class GraphicalController implements Initializable {
                 currentLevel++;
 
             }
-            game.goRoom();
+            actionInformation = game.goRoom();
             gameLoop();
         } else if(game.getPlayerScore() >= game.scoreToNextLevel()){
             game.killPlayer();
@@ -174,9 +173,6 @@ public class GraphicalController implements Initializable {
             gamePane.setOpacity(0.5);
             atLastLevel = false;
         }
-
-
-
 
     }
 
@@ -499,5 +495,10 @@ public class GraphicalController implements Initializable {
     public void showHelp(){
         helpPane.setDisable(false);
         helpPane.setVisible(true);
+    }
+
+    public void clearScore(ActionEvent e) {
+        HighScore.deleteScores();
+        showHighscore(e);
     }
 }

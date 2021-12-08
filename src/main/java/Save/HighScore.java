@@ -142,6 +142,11 @@ public class HighScore implements Serializable {
         return placholder;
     }
 
+    public static void deleteScores(){
+        saves.clear();
+        save();
+    }
+
     @Override
     public String toString(){
         String placeholder = "Score: " + getScore() + "  Turns used: " + getTotalTurns()
