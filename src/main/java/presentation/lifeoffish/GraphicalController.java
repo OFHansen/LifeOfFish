@@ -185,6 +185,17 @@ public class GraphicalController implements Initializable {
         return placeholder;
     }
 
+    public void resetBackgrounds(){
+
+        gameBackground0.setOpacity(1);
+        gameBackground1.setOpacity(1);
+        gameBackground2.setOpacity(1);
+        gameBackground3.setOpacity(1);
+        gameBackground4.setOpacity(1);
+        gameBackground5.setOpacity(1);
+
+    }
+
     public void setCurrentGridPane(){
 
         if(currentGridPane == null){
@@ -357,10 +368,11 @@ public class GraphicalController implements Initializable {
         currentLevelString = "" +currentLevel;
         next.setText("Next");
         gameLoop();
-
+        resetBackgrounds();
     }
 
     public void mainMenu(ActionEvent e) {
+        this.game = new GameLogic();
         hidedeathMenu();
         gamePane.setOpacity(1.0);
         hideGame();
@@ -370,6 +382,7 @@ public class GraphicalController implements Initializable {
         currentLevel = 1;
         currentLevelString = "" +currentLevel;
         next.setText("Next");
+        resetBackgrounds();
     }
 
     public void exitHighscore(ActionEvent e) {
