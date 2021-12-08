@@ -157,7 +157,6 @@ public class GraphicalController implements Initializable {
             ft.setNode(currentBackground());
             ft.setToValue(0);
             ft.play();
-            System.out.println("NEXT");
             if (currentLevel == 5){
                 currentLevelString = "Final level";
                 next.setText("End");
@@ -166,7 +165,7 @@ public class GraphicalController implements Initializable {
                 currentLevel++;
 
             }
-            game.goRoom();
+            actionInformation = game.goRoom();
             gameLoop();
         } else if(game.getPlayerScore() >= game.scoreToNextLevel()){
             game.killPlayer();
@@ -174,9 +173,6 @@ public class GraphicalController implements Initializable {
             gamePane.setOpacity(0.5);
             atLastLevel = false;
         }
-
-
-
 
     }
 
@@ -288,7 +284,6 @@ public class GraphicalController implements Initializable {
     }
 
     public void clearAll(){
-
         gPane1.getChildren().clear();
         gPane2.getChildren().clear();
         gPane3.getChildren().clear();
@@ -323,6 +318,11 @@ public class GraphicalController implements Initializable {
                 "\nYou are a fish, trying to survive at sea." +
                 "\nYour goal is to survive without becoming polluted." + "\nPress the arrow buttons to move, " +
                 "and press help if you need help.");
+        if(!(HighScore.highestScore() == null)){
+            highscore.setText(HighScore.highestScore());
+        }else{
+            highscore.setText("You have no save data");
+        }
     }
 
     public void printHighestScore(){
@@ -401,6 +401,7 @@ public class GraphicalController implements Initializable {
     public void exitHighscore(ActionEvent e) {
         hideHighscore();
         showMenu();
+
     }
 
     public void exitHelp(ActionEvent e) {
@@ -429,19 +430,26 @@ public class GraphicalController implements Initializable {
         totalTurnsText.setText(highscoreString(saves,1));
         pollutionValueText.setText(highscoreString(saves,2));
         highscoreDateText.setText(highscoreString(saves,3));
+
         hideMenu();
         showHighscorePane();
     }
 
     private String highscoreString(String[][] saves, int i){
-        String placeholder = saves[i][0]+"\n";
+        String placeholder;
+        try {
+            placeholder = saves[i][0]+"\n";
+        }catch (IndexOutOfBoundsException ex){
+            return "";
+        }
 
-        for(int j = 1; j<10; j++){
+        for(int j = 1; j<saves[i].length; j++){
             placeholder += saves[i][j];
             if(j<9){
                 placeholder +="\n";
             }
         }
+
         return placeholder;
     }
 
@@ -487,5 +495,10 @@ public class GraphicalController implements Initializable {
     public void showHelp(){
         helpPane.setDisable(false);
         helpPane.setVisible(true);
+    }
+
+    public void clearScore(ActionEvent e) {
+        HighScore.deleteScores();
+        showHighscore(e);
     }
 }

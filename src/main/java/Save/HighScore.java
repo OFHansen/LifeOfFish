@@ -1,9 +1,10 @@
 package Save;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+
 
 public class HighScore implements Serializable {
 
@@ -13,7 +14,7 @@ public class HighScore implements Serializable {
     private int score;
     private int totalTurns;
     private int pollutionValue;
-    private Date time;
+    private String time;
     private static HighScoreComparator sort = new HighScoreComparator();
 
 
@@ -22,7 +23,6 @@ public class HighScore implements Serializable {
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
-        this.time = new Date();
         if(this.score == 0){
             System.out.println("The score was 0 therefore it has not been saved.");
         } else {
@@ -34,7 +34,7 @@ public class HighScore implements Serializable {
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
-        this.time = new Date();
+        this.time = new SimpleDateFormat("HH:mm dd/MM/yyyy").format(new Date());
     }
 
     //methods
@@ -64,21 +64,20 @@ public class HighScore implements Serializable {
             o = new ObjectOutputStream(f);
 
             for(int i = 0; i < 10; i++){
-                o.writeObject(saves.get(i));
+                try{
+                    o.writeObject(saves.get(i));
+                }catch (IndexOutOfBoundsException ex){}
             }
             f.close();
             o.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-        }
+        } catch (IOException e){}
     }
 
     public static void load(){
-
+        saves.clear();
         FileInputStream f;
         ObjectInputStream o;
 
@@ -91,13 +90,9 @@ public class HighScore implements Serializable {
             }
             f.close();
             o.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            System.out.print("");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
 
         //Sorts the scores by highest first
         saves.sort(sort);
@@ -105,9 +100,11 @@ public class HighScore implements Serializable {
 
     public static String highestScore() {
         HighScore.load();
-        saves.add(new HighScore(0,0,0));
-
-        return saves.get(0).toString();
+        try{
+            return saves.get(0).toString();
+        }catch (IndexOutOfBoundsException ex){
+            return null;
+        }
     }
 
     public int getScore() {
@@ -122,38 +119,39 @@ public class HighScore implements Serializable {
         return pollutionValue;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
     public static String[][] highscoreFormatning(){
         load();
-        String[][] placholder = new String[4][10];
 
-        for(int i = 0; i<10; i++){
-            placholder[0][i] = String.valueOf(saves.get(i).getScore());
+        int numberOfSaves = saves.size();
+
+        String[][] placholder = new String[4][numberOfSaves];
+
+        for(int i = 0; i<numberOfSaves; i++){
+            try{
+                placholder[0][i] = String.valueOf(saves.get(i).getScore());
+                placholder[1][i] = String.valueOf(saves.get(i).getPollutionValue());
+                placholder[2][i] = String.valueOf(saves.get(i).getTotalTurns());
+                placholder[3][i] = saves.get(i).getTime();
+            } catch(IndexOutOfBoundsException ex){}
         }
-        for(int i = 0; i<10; i++){
-            placholder[1][i] = String.valueOf(saves.get(i).getPollutionValue());
-        }
-        for(int i = 0; i<10; i++){
-            placholder[2][i] = String.valueOf(saves.get(i).getTotalTurns());
-        }
-        for(int i = 0; i<10; i++){
-            placholder[3][i] = saves.get(i).getTime().getHours()+1+":"+saves.get(i).getTime().getMinutes();
-        }
+
         return placholder;
+    }
+
+    public static void deleteScores(){
+        saves.clear();
+        save();
     }
 
     @Override
     public String toString(){
-        String placeholder = null;
-
-        placeholder = "Score: " + getScore() + "  Turns used: " + getTotalTurns()
+        String placeholder = "Score: " + getScore() + "  Turns used: " + getTotalTurns()
                 + "\nPollution level: " + getPollutionValue();
 
         return placeholder;
     }
-
-    public static void main(String[] args) {}
 }

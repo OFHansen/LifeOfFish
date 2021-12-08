@@ -46,19 +46,19 @@ public class GameLogic {
 
 
     //Method to change room
-    public void goRoom() {
+    public String goRoom() {
 
         //Makes placeholder of current grid
         Grid placeholder = currentRoom.getMap();
 
         //Switches room
         currentRoom = currentRoom.getExit("");
-        System.out.println(getLongDescription());
 
         //Makes player from placholder grid, equal to player from new grid
         currentRoom.getMap().movePlayerToNextLevel(placeholder);
 
         roomCount++;
+        return getLongDescription();
     }
 
     public void resetRoomCount(){
