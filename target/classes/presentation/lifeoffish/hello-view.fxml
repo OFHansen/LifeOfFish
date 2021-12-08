@@ -18,7 +18,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.lifeoffish.GraphicalController">
     <children>
-        <AnchorPane fx:id="mainMenuPane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: #5bcadd#5bcadd;" visible="false">
+        <AnchorPane fx:id="mainMenuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: #5bcadd#5bcadd;">
             <children>
                 <Label alignment="TOP_CENTER" layoutX="25.0" layoutY="25.0" prefHeight="800.0" prefWidth="950.0" style="-fx-border-color: #351c75#351c75; -fx-border-radius: 40; -fx-border-width: 10; -fx-background-color: #ffd194; -fx-background-radius: 50;" text="Life Of Fish" textFill="#351c75">
                     <padding>
@@ -45,7 +45,7 @@
                 </Button>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: #5bcadd#5bcadd;">
+        <AnchorPane fx:id="gamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: #5bcadd#5bcadd;" visible="false">
             <children>
                 <ImageView fx:id="gameBackground5" fitHeight="560.0" fitWidth="780.0" layoutX="110.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" scaleY="1.21">
                     <image>

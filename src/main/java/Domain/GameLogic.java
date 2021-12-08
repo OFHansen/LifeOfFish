@@ -39,28 +39,26 @@ public class GameLogic {
     }
 
     //Movement for player
-    public void goInGrid(Command command) {
+    public void goInGrid(String direction) {
 
         //Checks if player forgot to write second word wth go command
-        if (!command.hasSecondWord()) {
+        if (direction == null) {
             System.out.println("Go where?");
             return;
         }
 
         //Checks weather or not the player has made an illegal move
         try {
-            movement(command);
+            movement(direction);
         } catch (IllegalMoveException ex) {
             System.out.println(ex);
-        } catch (IllegalCommandException exx){
-            System.out.println(exx);
         } catch (PlayerIsDeadException ex){}
     }
 
 
 
     //Method to change room
-    public void goRoom(Command command) {
+    public void goRoom() {
 
         //Makes placeholder of current grid
         Grid placeholder = currentRoom.getMap();
@@ -89,6 +87,7 @@ public class GameLogic {
         }
     }
 
+
     //method that makes all enemies move
     public void enemyTurn() {
         //finds all enemies
@@ -100,7 +99,7 @@ public class GameLogic {
             try {//tries moving
                 currentRoom.getMap().gridMovement(enemies.get(i), enemyAI(enemies.get(i)));
                 i++;
-            } catch (IllegalMoveException|IllegalCommandException ex) {// if that fails it tries again but only limited times
+            } catch (IllegalMoveException e) {// if that fails it tries again but only limited times
                 tries++;
             } catch (PlayerIsDeadException ex){
                 break;
@@ -113,13 +112,10 @@ public class GameLogic {
         }
     }
 
-    private Command enemyAI(Enemies enemy) {
+    private String enemyAI(Enemies enemy) {
         Random choiceMaker = new Random();
         //finds the players position
         ArrayList<Integer> playerPosition = currentRoom.getMap().getPosition(findPlayer());
-        //used to create a command
-        CommandWords commands = new CommandWords();
-        Command enemyMove = null;
         int move = 0;
 
         //gets the position of the enemy
@@ -146,21 +142,18 @@ public class GameLogic {
                 move = choiceMaker.nextInt(3);
             }
         }
-        //creates the command
-        switch (move) {
-            case 0:
-                enemyMove = new Command(commands.getCommandWord("go"), "down");
-                break;
-            case 1:
-                enemyMove = new Command(commands.getCommandWord("go"), "up");
-                break;
-            case 2:
-                enemyMove = new Command(commands.getCommandWord("go"), "right");
-                break;
-            case 3:
-                enemyMove = new Command(commands.getCommandWord("go"), "left");
-                break;
+        //creates the string
+        String enemyMove = null;
+        if(move == 0){
+            enemyMove = "down";
+        }else if(move == 1){
+            enemyMove = "up";
+        }else if(move == 2){
+            enemyMove = "right";
+        }else if (move == 3){
+            enemyMove = "left";
         }
+
         return enemyMove;
     }
 
@@ -216,8 +209,8 @@ public class GameLogic {
         return currentRoom.getLongDescription();
     }
 
-    private void movement(Command command) throws IllegalMoveException, IllegalCommandException, PlayerIsDeadException {
-        currentRoom.getMap().gridMovement(findPlayer(), command);
+    private void movement(String direction) throws IllegalMoveException, PlayerIsDeadException {
+        currentRoom.getMap().gridMovement(findPlayer(), direction);
     }
 
     public Player findPlayer() {
