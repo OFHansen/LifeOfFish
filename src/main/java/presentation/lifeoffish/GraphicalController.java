@@ -288,7 +288,6 @@ public class GraphicalController implements Initializable {
     }
 
     public void clearAll(){
-
         gPane1.getChildren().clear();
         gPane2.getChildren().clear();
         gPane3.getChildren().clear();
@@ -323,6 +322,9 @@ public class GraphicalController implements Initializable {
                 "\nYou are a fish, trying to survive at sea." +
                 "\nYour goal is to survive without becoming polluted." + "\nPress the arrow buttons to move, " +
                 "and press help if you need help.");
+        if(!(HighScore.highestScore() == null)){
+            highscore.setText(HighScore.highestScore());
+        }
     }
 
     public void printHighestScore(){
@@ -401,6 +403,7 @@ public class GraphicalController implements Initializable {
     public void exitHighscore(ActionEvent e) {
         hideHighscore();
         showMenu();
+
     }
 
     public void exitHelp(ActionEvent e) {

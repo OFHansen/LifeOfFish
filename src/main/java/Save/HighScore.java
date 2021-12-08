@@ -64,21 +64,20 @@ public class HighScore implements Serializable {
             o = new ObjectOutputStream(f);
 
             for(int i = 0; i < 10; i++){
-                o.writeObject(saves.get(i));
+                try{
+                    o.writeObject(saves.get(i));
+                }catch (IndexOutOfBoundsException ex){}
             }
             f.close();
             o.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-        }
+        } catch (IOException e){}
     }
 
     public static void load(){
-
+        saves.clear();
         FileInputStream f;
         ObjectInputStream o;
 
@@ -91,13 +90,9 @@ public class HighScore implements Serializable {
             }
             f.close();
             o.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            System.out.print("");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
 
         //Sorts the scores by highest first
         saves.sort(sort);
@@ -105,7 +100,6 @@ public class HighScore implements Serializable {
 
     public static String highestScore() {
         HighScore.load();
-        saves.add(new HighScore(0,0,0));
 
         return saves.get(0).toString();
     }
@@ -132,28 +126,19 @@ public class HighScore implements Serializable {
 
         for(int i = 0; i<10; i++){
             placholder[0][i] = String.valueOf(saves.get(i).getScore());
-        }
-        for(int i = 0; i<10; i++){
             placholder[1][i] = String.valueOf(saves.get(i).getPollutionValue());
-        }
-        for(int i = 0; i<10; i++){
             placholder[2][i] = String.valueOf(saves.get(i).getTotalTurns());
+            placholder[3][i] = saves.get(i).getTime().getHours()+":"+saves.get(i).getTime().getMinutes();
         }
-        for(int i = 0; i<10; i++){
-            placholder[3][i] = saves.get(i).getTime().getHours()+1+":"+saves.get(i).getTime().getMinutes();
-        }
+
         return placholder;
     }
 
     @Override
     public String toString(){
-        String placeholder = null;
-
-        placeholder = "Score: " + getScore() + "  Turns used: " + getTotalTurns()
+        String placeholder = "Score: " + getScore() + "  Turns used: " + getTotalTurns()
                 + "\nPollution level: " + getPollutionValue();
 
         return placeholder;
     }
-
-    public static void main(String[] args) {}
 }
