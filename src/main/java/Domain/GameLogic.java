@@ -9,7 +9,7 @@ import java.util.Random;
 public class GameLogic {
     //Attributes
     private Room currentRoom;
-    private static int[] scoreToNextLevel = {60,140,240,340,440,580};
+    private static int[] scoreToNextLevel = {1,2,3,4,5,20};
     private static int roomCount;
     public static String informationString;
 
@@ -74,6 +74,8 @@ public class GameLogic {
 
         roomCount++;
     }
+
+    public void resetRoomCount(){roomCount = 0;}
 
 
     //Sets quit to true, unless player wrote secondword with quit
@@ -195,6 +197,8 @@ public class GameLogic {
     public boolean isAlive() {
         return findPlayer().status();
     }
+
+    public void killPlayer(){findPlayer().triggerDeath();}
 
     public int getPlayerTotalTurns() {
         return findPlayer().getTotalTurns();

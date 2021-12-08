@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -38,6 +39,7 @@ public class GraphicalController implements Initializable {
 
     private int currentLevel = 1;
     private String currentLevelString = ""+currentLevel;
+    boolean atLastLevel = false;
 
     //Binding nodes from scene builder
     @FXML
@@ -82,6 +84,10 @@ public class GraphicalController implements Initializable {
     private Node gameBackground4;
     @FXML
     private Node gameBackground5;
+    @FXML
+    private Label deathMenuTitle;
+
+
 
 
     public void up(ActionEvent e){
@@ -130,23 +136,35 @@ public class GraphicalController implements Initializable {
 
     }
 
+
     public void next(ActionEvent e){
 
-        if(game.isAlive() && game.getPlayerScore() >= game.scoreToNextLevel()) {
+        if(game.isAlive() && game.getPlayerScore() >= game.scoreToNextLevel() && !atLastLevel) {
             ft.setNode(currentBackground());
             ft.setToValue(0);
             ft.play();
             System.out.println("NEXT");
             if (currentLevel == 5){
                 currentLevelString = "Final level";
+                next.setText("End");
+                atLastLevel = true;
             } else {
                 currentLevel++;
-                currentLevelString = "" +currentLevel;
+
             }
             movementCommand = new Command(commands.getCommandWord("next"), "");
             game.goRoom(movementCommand);
             gameLoop();
+        } else if(game.getPlayerScore() >= game.scoreToNextLevel()){
+            game.killPlayer();
+            showdeathMenu();
+            gamePane.setOpacity(0.5);
+            atLastLevel = false;
         }
+
+
+
+
     }
 
     private Node currentBackground(){
@@ -168,6 +186,11 @@ public class GraphicalController implements Initializable {
     }
 
     public void setCurrentGridPane(){
+
+        if(currentGridPane == null){
+            currentGridPane = gPane1;
+            currentGridPane.setVisible(true);
+        }
 
         if(currentLevel == 1){
             currentGridPane = gPane1;
@@ -205,6 +228,11 @@ public class GraphicalController implements Initializable {
         game.getMaintenance();
         updateGrid();
         updateNextButton();
+
+        if(!atLastLevel){
+
+        }
+
         if(!game.isAlive()){
             showdeathMenu();
             gamePane.setOpacity(0.5);
@@ -215,7 +243,8 @@ public class GraphicalController implements Initializable {
 
 
     public void updateGrid(){
-        currentGridPane.getChildren().clear();
+
+        clearAll();
 
         ArrayList<BufferedImage> placeholder = game.listOfImages();
         ArrayList<Image> images = new ArrayList();
@@ -232,6 +261,16 @@ public class GraphicalController implements Initializable {
         }
         updateText();
 
+    }
+
+    public void clearAll(){
+
+        gPane1.getChildren().clear();
+        gPane2.getChildren().clear();
+        gPane3.getChildren().clear();
+        gPane4.getChildren().clear();
+        gPane5.getChildren().clear();
+        gPane6.getChildren().clear();
     }
 
     @Override
@@ -313,6 +352,11 @@ public class GraphicalController implements Initializable {
         updateGrid();
         updateText();
         printHighestScore();
+        game.resetRoomCount();
+        currentLevel = 1;
+        currentLevelString = "" +currentLevel;
+        next.setText("Next");
+
     }
 
     public void mainMenu(ActionEvent e) {
@@ -321,6 +365,10 @@ public class GraphicalController implements Initializable {
         hideGame();
         showMenu();
         flag = true;
+        game.resetRoomCount();
+        currentLevel = 1;
+        currentLevelString = "" +currentLevel;
+        next.setText("Next");
     }
 
     public void exitHighscore(ActionEvent e) {
@@ -391,6 +439,9 @@ public class GraphicalController implements Initializable {
     public void showdeathMenu(){
         deathPane.setDisable(false);
         deathPane.setVisible(true);
+        if(atLastLevel){
+            deathMenuTitle.setText("You finished the game!");
+        } else {deathMenuTitle.setText("You died!");}
     }
     public void hideHighscore(){
         highscorePane.setDisable(true);
