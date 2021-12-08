@@ -97,7 +97,6 @@ public class GraphicalController implements Initializable {
             }catch (IllegalMoveException ex){
                 actionInformation = ex.getMessage();
             }
-            game.enemyTurn();
             gameLoop();
         }
 
@@ -112,7 +111,6 @@ public class GraphicalController implements Initializable {
             }catch (IllegalMoveException ex){
                 actionInformation = ex.getMessage();
             }
-            game.enemyTurn();
             gameLoop();
         }
 
@@ -127,7 +125,6 @@ public class GraphicalController implements Initializable {
             }catch (IllegalMoveException ex){
                 actionInformation = ex.getMessage();
             }
-            game.enemyTurn();
             gameLoop();
 
         }
@@ -143,8 +140,6 @@ public class GraphicalController implements Initializable {
             } catch (IllegalMoveException ex){
                 actionInformation = ex.getMessage();
             }
-
-            game.enemyTurn();
             gameLoop();
         }
 
@@ -244,14 +239,14 @@ public class GraphicalController implements Initializable {
     }
 
     public void gameLoop(){
+        try {
+            game.enemyTurn();
+        } catch (PlayerIsDeadException e) {}
         setCurrentGridPane();
         game.getMaintenance();
         updateGrid();
         updateNextButton();
 
-        if(!atLastLevel){
-
-        }
 
         if(!game.isAlive()){
             showdeathMenu();

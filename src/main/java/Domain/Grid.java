@@ -249,7 +249,7 @@ public class Grid {
         } else if (entity instanceof Enemies) { //checks if the entity is an enemy
             if (placeholder instanceof Player) { //checks if the enemy collided with the player
                 ((Player)placeholder).triggerDeath();
-
+                this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
                 informationString = "Too bad" +
                         "\nA " + entity.getName() + " has caught you." +
                         "\nThis action has resulted in your death.";

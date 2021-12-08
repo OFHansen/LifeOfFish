@@ -70,7 +70,7 @@ public class GameLogic {
 
 
     //method that makes all enemies move
-    public void enemyTurn() {
+    public void enemyTurn() throws PlayerIsDeadException {
         //finds all enemies
         ArrayList<Enemies> enemies = currentRoom.getMap().getAllEnemies();
         int tries = 0;
@@ -82,8 +82,6 @@ public class GameLogic {
                 i++;
             } catch (IllegalMoveException e) {// if that fails it tries again but only limited times
                 tries++;
-            } catch (PlayerIsDeadException ex){
-                break;
             } finally { //controls if the one enemy has tried to many times
                 if (tries > 9) {
                     i++;
