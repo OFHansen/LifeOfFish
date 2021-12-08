@@ -356,6 +356,7 @@ public class GraphicalController implements Initializable {
         currentLevel = 1;
         currentLevelString = "" +currentLevel;
         next.setText("Next");
+        gameLoop();
 
     }
 
