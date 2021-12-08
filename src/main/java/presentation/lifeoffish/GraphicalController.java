@@ -324,6 +324,8 @@ public class GraphicalController implements Initializable {
                 "and press help if you need help.");
         if(!(HighScore.highestScore() == null)){
             highscore.setText(HighScore.highestScore());
+        }else{
+            highscore.setText("You have no save data");
         }
     }
 
@@ -432,19 +434,26 @@ public class GraphicalController implements Initializable {
         totalTurnsText.setText(highscoreString(saves,1));
         pollutionValueText.setText(highscoreString(saves,2));
         highscoreDateText.setText(highscoreString(saves,3));
+
         hideMenu();
         showHighscorePane();
     }
 
     private String highscoreString(String[][] saves, int i){
-        String placeholder = saves[i][0]+"\n";
+        String placeholder;
+        try {
+            placeholder = saves[i][0]+"\n";
+        }catch (IndexOutOfBoundsException ex){
+            return "";
+        }
 
-        for(int j = 1; j<10; j++){
+        for(int j = 1; j<saves[i].length; j++){
             placeholder += saves[i][j];
             if(j<9){
                 placeholder +="\n";
             }
         }
+
         return placeholder;
     }
 
