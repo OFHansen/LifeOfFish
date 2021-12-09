@@ -19,18 +19,7 @@ public class HighScore implements Serializable {
 
 
     //constructors
-    public HighScore(int score, int totalTurns, int pollutionValue){
-        this.score = score;
-        this.totalTurns = totalTurns;
-        this.pollutionValue = pollutionValue;
-        if(this.score == 0){
-            System.out.println("The score was 0 therefore it has not been saved.");
-        } else {
-            clone(score, totalTurns, pollutionValue);
-        }
-    }
-
-    private HighScore(int score, int totalTurns, int pollutionValue, String dingoBob){
+    private HighScore(int score, int totalTurns, int pollutionValue){
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
@@ -38,8 +27,8 @@ public class HighScore implements Serializable {
     }
 
     //methods
-    private static void clone(int score, int totalTurns, int pollutionValue){
-        HighScore placeholder = new HighScore(score,totalTurns,pollutionValue,"");
+    public static void createSave(int score, int totalTurns, int pollutionValue){
+        HighScore placeholder = new HighScore(score,totalTurns,pollutionValue);
 
         //Loads the existing HighScore objects saved in Highscore.txt
         HighScore.load();
