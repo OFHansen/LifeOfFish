@@ -35,7 +35,7 @@ public class Player extends GameObjects{
     }
 
     public void triggerDeath() {
-        new HighScore(getScore(), getTotalTurns(), getPollutionValue());
+        HighScore.createSave(getScore(), getTotalTurns(), getPollutionValue());
         this.alive = false;
     }
 
