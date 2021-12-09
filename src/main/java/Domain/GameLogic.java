@@ -54,9 +54,6 @@ public class GameLogic {
         //Switches room
         currentRoom = currentRoom.getExit("");
 
-        //Makes player from placholder grid, equal to player from new grid
-        currentRoom.getMap().movePlayerToNextLevel(placeholder);
-
         roomCount++;
         return getLongDescription();
     }
@@ -94,7 +91,7 @@ public class GameLogic {
     private String enemyAI(Enemies enemy) {
         Random choiceMaker = new Random();
         //finds the players position
-        ArrayList<Integer> playerPosition = currentRoom.getMap().getPosition(findPlayer());
+        ArrayList<Integer> playerPosition = currentRoom.getMap().getPosition(getPlayer());
         int move = 0;
 
         //gets the position of the enemy
@@ -148,10 +145,6 @@ public class GameLogic {
         return currentRoom.scoreToNextLevel();
     }
 
-    public void PrintMap() {
-        currentRoom.getMap().printGrid();
-    }
-
     public GameObjects[][] getMap(){return currentRoom.getMap().getGrid();}
 
     public void getMaintenance() {
@@ -159,21 +152,23 @@ public class GameLogic {
     }
 
     public boolean isAlive() {
-        return findPlayer().status();
+        return getPlayer().status();
     }
 
-    public void killPlayer(){findPlayer().triggerDeath();}
+    public void killPlayer(){getPlayer().triggerDeath();}
 
     public int getPlayerTotalTurns() {
-        return findPlayer().getTotalTurns();
+        return getPlayer().getTotalTurns();
     }
 
     public int getPlayerTurns() {
-        return findPlayer().getTurns();
+        return getPlayer().getTurns();
     }
 
+    public int getPlayerPollutionValue(){return getPlayer().getPollutionValue();}
+
     public int getPlayerScore() {
-        return findPlayer().getScore();
+        return getPlayer().getScore();
     }
 
     public String getLongDescription() {
@@ -181,11 +176,11 @@ public class GameLogic {
     }
 
     private String movement(String direction) throws IllegalMoveException, PlayerIsDeadException {
-        return currentRoom.getMap().gridMovement(findPlayer(), direction);
+        return currentRoom.getMap().gridMovement(getPlayer(), direction);
     }
 
-    public Player findPlayer() {
-        return currentRoom.getMap().findPlayer();
+    public Player getPlayer() {
+        return Grid.getPlayer();
     }
 
     public ArrayList<BufferedImage> listOfImages(){
