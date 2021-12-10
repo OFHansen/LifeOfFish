@@ -22,7 +22,7 @@ public class GraphicalApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         Scene scene = new Scene(root);
 
-        Image icon = new Image("file:src/main/resources/presentation/lifeoffish/Images/Icon.png");
+        Image icon = new Image("file:src/main/resources/Images/Tuna.png");
         stage.getIcons().add(icon);
 
         stage.setResizable(false);
