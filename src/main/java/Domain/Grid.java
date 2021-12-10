@@ -13,7 +13,6 @@ public class Grid {
     private int foodQuantity;
     private int obstaclesQuantity;
     private GameObjects[][] grid;
-    private static Player player = new Player();
 
     //Constructor
     public Grid(int column, int row, int enemiesQuantity, int foodQuantity, int obstaclesQuantity) {
@@ -39,7 +38,8 @@ public class Grid {
         //Array where all entities are going in
         GameObjects[] objectList = new GameObjects[totalQuantity];
 
-        objectList[placeCounter] = player;
+        //creating the player
+        objectList[placeCounter] = new Player();
         placeCounter++;
 
 
@@ -118,6 +118,25 @@ public class Grid {
         return position;
     }
 
+    //Method to find player object
+    public Player findPlayer() {
+
+        //list that's going to get returned
+        ArrayList<Integer> position = new ArrayList<>();
+
+        //checks all positions in the 2D array for the player
+        for (int column = 0; column < this.column; column++) {
+            for (int row = 0; row < this.grid[column].length; row++) {
+                if (this.grid[row][column] instanceof Player) {
+                    position.add(row);
+                    position.add(column);
+                    break;
+                }
+            }
+        }
+        return (Player) this.grid[position.get(0)][position.get(1)];
+    }
+
     //Method that finds all Enemies and returns them in an Arraylist
     public ArrayList<Enemies> getAllEnemies(){
         //crates the arraylist
@@ -176,10 +195,10 @@ public class Grid {
             this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
         }
         if(entity instanceof Player){
-            if(!(player.getScore() >= GameLogic.getScoreToNextLevel()[GameLogic.getRoomCount()])){
-                player.addTotalTurns(1);
+            if(!(findPlayer().getScore() >= GameLogic.getScoreToNextLevel()[GameLogic.getRoomCount()])){
+                findPlayer().addTotalTurns(1);
             }
-            player.removeTurns(1);
+            findPlayer().removeTurns(1);
         }
 
         String informationString = null;
@@ -230,6 +249,7 @@ public class Grid {
         } else if (entity instanceof Enemies) { //checks if the entity is an enemy
             if (placeholder instanceof Player) { //checks if the enemy collided with the player
                 ((Player)placeholder).triggerDeath();
+                this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
                 informationString = "Too bad" +
                         "\nA " + entity.getName() + " has caught you." +
                         "\nThis action has resulted in your death.";
@@ -241,10 +261,31 @@ public class Grid {
         }
 
         if(entity instanceof Player) {
-            player.calculateScore();
+            findPlayer().calculateScore();
         }
 
         return informationString;
+    }
+
+    //Moves player to next level
+    public void movePlayerToNextLevel(Grid grid){
+
+        //list that's going to get returned
+        ArrayList<Integer> position = new ArrayList<>();
+
+        //checks all positions in the 2D array for the player
+        for (int column = 0; column < grid.getGrid().length; column++) {
+            for (int row = 0; row < grid.getGrid()[column].length; row++) {
+                if (grid.getGrid()[row][column] instanceof Player) {
+                    position.add(row);
+                    position.add(column);
+                    break;
+                }
+            }
+        }
+
+        this.grid[getPosition(findPlayer()).get(0)][getPosition(findPlayer()).get(1)]
+                = (Player) grid.getGrid()[position.get(0)][position.get(1)];
     }
 
     public GameObjects[][] getGrid() {
@@ -315,9 +356,5 @@ public class Grid {
                 }
             }
         }
-    }
-
-    public static Player getPlayer() {
-        return player;
     }
 }
