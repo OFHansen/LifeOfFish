@@ -10,12 +10,11 @@ public class Player extends GameObjects{
 
     //Constructor
     public Player() {
-        super("Tuna",10,"\uD83D\uDC1F",0);
+        super("Tuna",10,0,"a");
         this.alive = true;
         this.totalTurns = 0;
         this.score = 0;
     }
-
 
     //Methods
     public int getScore(){
@@ -41,15 +40,13 @@ public class Player extends GameObjects{
 
     //Checks if player is alive
     public boolean status(){
-        boolean placeholder = this.alive;
-        return placeholder;
+        return this.alive;
     }
 
     @Override
     public String toString() {
         return "Name: " + getName() + "    Current score: " + getScore() +
-                "    Current turn: " + getTurns() + "    Your current pollution level: "
+                "    Current turn: " + getEnergy() + "    Your current pollution level: "
                 + getPollutionValue();
     }
-
 }

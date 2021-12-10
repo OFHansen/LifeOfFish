@@ -28,67 +28,52 @@ import java.util.ResourceBundle;
 
 public class GraphicalController implements Initializable {
 
+    //Attributes
     private GameLogic game = new GameLogic();
     private FadeTransition ft = new FadeTransition(new Duration(3000));
     private String actionInformation;
-
     private GridPane currentGridPane;
-
-    private int currentLevel = 1;
+    private static int currentLevel = 1;
     private String currentLevelString = ""+currentLevel;
     boolean atLastLevel = false;
+    private Boolean flag = false;
 
     //Binding nodes from scene builder
     @FXML
     private GridPane gPane1,gPane2,gPane3,gPane4,gPane5,gPane6;
     @FXML
-    private Text informationText;
+    private Text informationText,stats,highscore,statsEnd,scoreText,totalTurnsText,pollutionValueText,highscoreDateText;
     @FXML
-    private Text stats;
-    @FXML
-    private AnchorPane gamePane;
-    @FXML
-    private AnchorPane deathPane;
-    @FXML
-    private AnchorPane mainMenuPane;
-    @FXML
-    private AnchorPane highscorePane;
-    @FXML
-    private AnchorPane helpPane;
+    private AnchorPane gamePane,mainMenuPane,highscorePane,helpPane,deathPane;
     @FXML
     private Button next;
     @FXML
-    private Text highscore;
-    @FXML
-    private Text statsEnd;
-    @FXML
-    private Text scoreText;
-    @FXML
-    private Text totalTurnsText;
-    @FXML
-    private Text pollutionValueText;
-    @FXML
-    private Text highscoreDateText;
-    @FXML
-    private Node gameBackground0;
-    @FXML
-    private Node gameBackground1;
-    @FXML
-    private Node gameBackground2;
-    @FXML
-    private Node gameBackground3;
-    @FXML
-    private Node gameBackground4;
-    @FXML
-    private Node gameBackground5;
+    private Node gameBackground0,gameBackground1,gameBackground2,gameBackground3,gameBackground4,gameBackground5;
     @FXML
     private Label deathMenuTitle;
 
+    //Methods
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ArrayList<BufferedImage> placeholder = game.listOfImages();
+        ArrayList<Image> images = new ArrayList();
+        for(int i = 0; i<placeholder.size(); i++){
+            images.add(convertToFxImage(placeholder.get(i)));
+        }
 
-
+        setCurrentGridPane();
+        int i = 0;
+        for (int column = 0; column < game.getMap().length; column++) {
+            for (int row = 0; row < game.getMap()[column].length; row++) {
+                currentGridPane.add(new ImageView(images.get(i)),column,row);
+                i++;
+            }
+        }
+        printWelcome();
+        updateText();
+    }
 
     public void up(ActionEvent e){
-
         if(game.isAlive()) {
             try {
                  actionInformation = game.goInGrid("up");
@@ -99,10 +84,8 @@ public class GraphicalController implements Initializable {
             }
             gameLoop();
         }
-
     }
     public void down(ActionEvent e){
-
         if(game.isAlive()) {
             try {
                actionInformation = game.goInGrid("down");
@@ -113,10 +96,8 @@ public class GraphicalController implements Initializable {
             }
             gameLoop();
         }
-
     }
     public void left(ActionEvent e){
-
         if(game.isAlive()) {
             try {
                 actionInformation = game.goInGrid("left");
@@ -126,12 +107,10 @@ public class GraphicalController implements Initializable {
                 actionInformation = ex.getMessage();
             }
             gameLoop();
-
         }
     }
 
     public void right (ActionEvent event){
-
         if(game.isAlive()) {
             try {
                 actionInformation = game.goInGrid("right");
@@ -142,13 +121,25 @@ public class GraphicalController implements Initializable {
             }
             gameLoop();
         }
-
     }
 
+    public void gameLoop(){
+        try {
+            game.enemyTurn();
+        } catch (PlayerIsDeadException e) {}
+        setCurrentGridPane();
+        game.getMaintenance();
+        updateGrid();
+        updateNextButton();
+        if(!game.isAlive()){
+            showdeathMenu();
+            gamePane.setOpacity(0.5);
+        }
+        informationText.setText(actionInformation);
+    }
 
     public void next(ActionEvent e){
-
-        if(game.isAlive() && game.getPlayerScore() >= game.scoreToNextLevel() && !atLastLevel) {
+        if(game.isAlive() && game.getPlayerScore() >= game.scoreToNextLevel() && !atLastLevel){
             ft.setNode(currentBackground());
             ft.setToValue(0);
             ft.play();
@@ -158,22 +149,22 @@ public class GraphicalController implements Initializable {
                 atLastLevel = true;
             } else {
                 currentLevel++;
-
+                currentLevelString = String.valueOf(currentLevel);
             }
-            actionInformation = game.goRoom();
-            gameLoop();
-        } else if(game.getPlayerScore() >= game.scoreToNextLevel()){
+            actionInformation = game.goToNextRoom();
+        } else if(game.getPlayerScore() >= game.scoreToNextLevel() && atLastLevel){
             game.killPlayer();
             showdeathMenu();
+            deathMenuTitle.setText("You finished the game!");
             gamePane.setOpacity(0.5);
             atLastLevel = false;
         }
-
+        updateGrid();
+        updateNextButton();
     }
 
     private Node currentBackground(){
         Node placeholder = gameBackground0;
-
         if(currentLevel==2){
             placeholder = gameBackground1;
         }else if(currentLevel==3){
@@ -205,9 +196,8 @@ public class GraphicalController implements Initializable {
         if(currentGridPane == null){
             currentGridPane = gPane1;
             currentGridPane.setVisible(true);
-        }
 
-        if(currentLevel == 1){
+        } else if(currentLevel == 1){
             currentGridPane = gPane1;
             currentGridPane.setVisible(true);
 
@@ -238,31 +228,13 @@ public class GraphicalController implements Initializable {
         }
     }
 
-    public void gameLoop(){
-        try {
-            game.enemyTurn();
-        } catch (PlayerIsDeadException e) {}
-        setCurrentGridPane();
-        game.getMaintenance();
-        updateGrid();
-        updateNextButton();
-
-
-        if(!game.isAlive()){
-            showdeathMenu();
-            gamePane.setOpacity(0.5);
-        }
-        informationText.setText(actionInformation);
-
-    }
-
-
     public void updateGrid(){
-
         clearAll();
 
         ArrayList<BufferedImage> placeholder = game.listOfImages();
+
         ArrayList<Image> images = new ArrayList();
+
         for(int i = 0; i<placeholder.size(); i++){
             images.add(convertToFxImage(placeholder.get(i)));
         }
@@ -287,31 +259,11 @@ public class GraphicalController implements Initializable {
         gPane6.getChildren().clear();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<BufferedImage> placeholder = game.listOfImages();
-        ArrayList<Image> images = new ArrayList();
-        for(int i = 0; i<placeholder.size(); i++){
-            images.add(convertToFxImage(placeholder.get(i)));
-        }
-
-        setCurrentGridPane();
-        int i = 0;
-        for (int column = 0; column < game.getMap().length; column++) {
-            for (int row = 0; row < game.getMap()[column].length; row++) {
-                currentGridPane.add(new ImageView(images.get(i)),column,row);
-                i++;
-            }
-        }
-        printWelcome();
-        updateText();
-        printHighestScore();
-    }
-
     public void printWelcome(){
         informationText.setText("Welcome to the Life of Fish!" +
                 "\nYou are a fish, trying to survive at sea." +
-                "\nYour goal is to survive without becoming polluted." + "\nPress the arrow buttons to move, " +
+                "\nYour goal is to survive without becoming polluted." +
+                "\nPress the arrow buttons to move, " +
                 "and press help if you need help.");
         if(!(HighScore.highestScore() == null)){
             highscore.setText(HighScore.highestScore());
@@ -320,25 +272,20 @@ public class GraphicalController implements Initializable {
         }
     }
 
-    public void printHighestScore(){
-        //highscore.setText(HighScore.highestScore());
-    }
-
     public void updateText(){
-        stats.setText("Score: " + game.findPlayer().getScore() + "/" +game.scoreToNextLevel()+
-                "\nPollution value: " + game.findPlayer().getPollutionValue() +
-                "\nEnergy: " + game.findPlayer().getTurnValue() +
-                "\nTotal turns: "+ game.findPlayer().getTotalTurns() +
+        stats.setText("Score: " + game.getPlayerScore() + "/" +game.scoreToNextLevel()+
+                "\nPollution value: " + game.getPlayerPollutionValue() +
+                "\nEnergy: " + game.getPlayerEnergy() +
+                "\nTotal turns: "+ game.getPlayerTotalTurns() +
                 "\nCurrent level: " + currentLevelString);
 
         statsEnd.setText("Your fish lived through "+GameLogic.getRoomCount()+ " decades" +
                 "\nWhile your fish tried to survive, the filthy humans were destroying the ocean!"+
-                "\nThat resulted in your fish getting a pollution value of: "+game.findPlayer().getPollutionValue() +
-                "\nRemember that when you buy products from the fishing industry."+
-                "\nTotal score: " + game.findPlayer().getScore() +
-                "\nTotal turns: "+ game.findPlayer().getTotalTurns());
-
-
+                "\nThat resulted in your fish getting a pollution value of: "+game.getPlayerPollutionValue() +
+                "\nWould you like to eat this fish?."+
+                "\nYour final score and total turns used is:"+
+                "\nFinal score: " + game.getPlayerScore() +
+                "\nTotal turns: "+ game.getPlayerTotalTurns());
     }
 
     public void updateNextButton(){
@@ -349,6 +296,7 @@ public class GraphicalController implements Initializable {
 
     }
 
+    //....
     private static Image convertToFxImage(BufferedImage image) {
         WritableImage wr = null;
         if (image != null) {
@@ -360,16 +308,15 @@ public class GraphicalController implements Initializable {
                 }
             }
         }
-
         return new ImageView(wr).getImage();
     }
 
     public void playAgain(ActionEvent e) {
+        atLastLevel = false;
         this.game = new GameLogic();
         hidedeathMenu();
         gamePane.setOpacity(1.0);
         updateGrid();
-        printHighestScore();
         game.resetRoomCount();
         currentLevel = 1;
         currentLevelString = "" +currentLevel;
@@ -380,7 +327,6 @@ public class GraphicalController implements Initializable {
     }
 
     public void mainMenu(ActionEvent e) {
-        this.game = new GameLogic();
         hidedeathMenu();
         gamePane.setOpacity(1.0);
         hideGame();
@@ -402,9 +348,10 @@ public class GraphicalController implements Initializable {
     public void exitHelp(ActionEvent e) {
         hideHelp();
     }
-    private Boolean flag = false;
+
     public void play(ActionEvent e) {
         if(flag){
+            atLastLevel = false;
             this.game = new GameLogic();
             updateGrid();
             printWelcome();
@@ -437,7 +384,6 @@ public class GraphicalController implements Initializable {
         }catch (IndexOutOfBoundsException ex){
             return "";
         }
-
         for(int j = 1; j<saves[i].length; j++){
             placeholder += saves[i][j];
             if(j<9){
@@ -471,9 +417,7 @@ public class GraphicalController implements Initializable {
     public void showdeathMenu(){
         deathPane.setDisable(false);
         deathPane.setVisible(true);
-        if(atLastLevel){
-            deathMenuTitle.setText("You finished the game!");
-        } else {deathMenuTitle.setText("You died!");}
+        deathMenuTitle.setText("You died!");
     }
     public void hideHighscore(){
         highscorePane.setDisable(true);

@@ -8,21 +8,21 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 
-public class GameObjects {
+public abstract class GameObjects {
     //Attributes
     private String name;
-    private int turnValue;
-    private String symbol;
+    private int energy;
     private int pollutionValue;
     private BufferedImage image;
+    private String article;
 
     //Constructor
-    public GameObjects(String name, int turnValue, String symbol, int pollutionValue){
+    public GameObjects(String name, int energy, int pollutionValue, String article){
         this.name = name;
-        this.turnValue = turnValue;
-        this.symbol = symbol;
+        this.energy = energy;
         this.pollutionValue = pollutionValue;
         this.image = getObjectImage(name);
+        this.article = article;
     }
 
     //Methods
@@ -30,8 +30,12 @@ public class GameObjects {
         return name;
     }
 
-    public int getTurnValue() {
-        return turnValue;
+    public String getArticle() {
+        return article;
+    }
+
+    public int getEnergy() {
+        return energy;
     }
 
     public int getPollutionValue() {
@@ -42,19 +46,13 @@ public class GameObjects {
         this.pollutionValue += pollutionValue;
     }
 
-    public void addTurns(int gain){
-        this.turnValue += gain;
+    public void addEnergy(int gain){
+        this.energy += gain;
     }
 
-    public void removeTurns(int loss){
-        this.turnValue -= loss;
+    public void removeEnergy(int loss){
+        this.energy -= loss;
     }
-
-    public int getTurns(){
-        return this.turnValue;
-    }
-
-    public String getSymbol(){return symbol;}
 
     private BufferedImage getObjectImage(String name){
         BufferedImage img = null;

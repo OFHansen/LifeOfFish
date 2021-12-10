@@ -23,6 +23,7 @@ public class HighScore implements Serializable {
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
+        //....
         this.time = new SimpleDateFormat("HH:mm dd/MM/yyyy").format(new Date());
     }
 
@@ -42,8 +43,8 @@ public class HighScore implements Serializable {
 
     public static void save(){
 
-        FileOutputStream f = null;
-        ObjectOutputStream o = null;
+        FileOutputStream f;
+        ObjectOutputStream o;
 
         //Sorts the scores by highest first
         saves.sort(sort);
@@ -67,6 +68,7 @@ public class HighScore implements Serializable {
 
     public static void load(){
         saves.clear();
+
         FileInputStream f;
         ObjectInputStream o;
 

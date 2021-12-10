@@ -3,28 +3,22 @@ package Domain;
 import javafx.scene.control.Label;
 
 public class Enemies extends GameObjects{
-    //Attributes
-    private int speed;
-
 
     //Constructor
-    private Enemies(String name){
-        super(name, -1000,"\uD83D\uDC19", 0);
-
-
+    private Enemies(String name, String article){
+        super(name, 0, 0, article);
     }
 
+    //Methods
     public static Enemies create(int type){
         Enemies placeholder = null;
-
         if(type == 0){
-            placeholder = new Enemies("Octopus");
+            placeholder = new Enemies("Octopus","an");
         }else if(type == 1){
-            placeholder = new Enemies("Shark");
+            placeholder = new Enemies("Shark","a");
         }else if(type == 2){
-            placeholder = new Enemies("Killer Whale");
+            placeholder = new Enemies("Killer Whale","a");
         }
-
         return placeholder;
     }
 

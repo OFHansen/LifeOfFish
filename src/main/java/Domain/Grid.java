@@ -13,6 +13,7 @@ public class Grid {
     private int foodQuantity;
     private int obstaclesQuantity;
     private GameObjects[][] grid;
+    private Random decider = new Random();
 
     //Constructor
     public Grid(int column, int row, int enemiesQuantity, int foodQuantity, int obstaclesQuantity) {
@@ -42,8 +43,6 @@ public class Grid {
         objectList[placeCounter] = new Player();
         placeCounter++;
 
-
-        Random decider = new Random();
         //loop that creates enemies and places them in the array
         for (int i = 0; i < enemiesQuantity; i++) {
             objectList[placeCounter] = Enemies.create(decider.nextInt(3));
@@ -85,37 +84,7 @@ public class Grid {
                 count++;
             }
         }
-
         this.grid = grid;
-
-    }
-
-    //Method to print grid
-    public void printGrid() {
-        for (int column = 0; column < this.grid.length; column++) {
-            for (int row = 0; row < this.grid[column].length; row++) {
-                System.out.print(" " + this.grid[row][column].getSymbol() + " ");
-            }
-            System.out.println("");
-        }
-    }
-
-    public ArrayList<Integer> getPosition(GameObjects entity) {
-
-        //list that's going to get returned
-        ArrayList<Integer> position = new ArrayList<>();
-
-        //checks all positions in the 2D array for the entity
-        for (int column = 0; column < this.grid.length; column++) {
-            for (int row = 0; row < this.grid[column].length; row++) {
-                if (this.grid[row][column] == entity) {
-                    position.add(row);
-                    position.add(column);
-                    break;
-                }
-            }
-        }
-        return position;
     }
 
     //Method to find player object
@@ -137,22 +106,6 @@ public class Grid {
         return (Player) this.grid[position.get(0)][position.get(1)];
     }
 
-    //Method that finds all Enemies and returns them in an Arraylist
-    public ArrayList<Enemies> getAllEnemies(){
-        //crates the arraylist
-        ArrayList<Enemies> enemies = new ArrayList<>();
-
-        //loops through the grid, looking for enemies
-        for (int column = 0; column < this.grid.length; column++) {
-            for (int row = 0; row < this.grid[column].length; row++) {
-                if (this.grid[row][column] instanceof Enemies) {
-                    enemies.add((Enemies) this.grid[row][column]);
-                }
-            }
-        }
-        return enemies;
-    }
-
     //Movement in grid
     public String gridMovement(GameObjects entity, String direction) throws IllegalMoveException,
             PlayerIsDeadException {
@@ -160,8 +113,6 @@ public class Grid {
         //2 values that represent where the entity is going
         int row = 0;
         int column = 0;
-
-
 
         if (direction.equals("right")) {
             row = 1;
@@ -177,7 +128,7 @@ public class Grid {
         ArrayList<Integer> entityPosition = getPosition(entity);
 
         //takes whatever there is on the position the entity is about to go to at stores it
-        GameObjects placeholder = null;
+        GameObjects placeholder;
         try {
             placeholder = this.grid[entityPosition.get(0) + row][entityPosition.get(1) + column];
         } catch (IndexOutOfBoundsException ex){
@@ -189,36 +140,35 @@ public class Grid {
 
         //places water where original the entity was
         this.grid[entityPosition.get(0)][entityPosition.get(1)] = new Water();
-        
+        //checks if an enemy collided with another enemy
         if(entity instanceof Enemies) {
             if(placeholder instanceof Enemies)
             this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
         }
-        if(entity instanceof Player){
-            if(!(findPlayer().getScore() >= GameLogic.getScoreToNextLevel()[GameLogic.getRoomCount()])){
-                findPlayer().addTotalTurns(1);
-            }
-            findPlayer().removeTurns(1);
-        }
 
+        //checks if player, and adds total turn and remove energy
+        if(entity instanceof Player){
+            findPlayer().addTotalTurns(1);
+            findPlayer().removeEnergy(1);
+        }
         String informationString = null;
 
         //checks if the entity is the player
         if (entity instanceof Player) {
             if (placeholder instanceof Food) { //checks if the player collided with a food
-                ((Player) entity).addTurns(placeholder.getTurnValue());
+                ((Player) entity).addEnergy(placeholder.getEnergy());
                 ((Player) entity).addPollutionValue(placeholder.getPollutionValue());
 
-                informationString = "You ate a " + placeholder.getName() + "." + "" +
+                informationString = "You ate " +placeholder.getArticle()+ " " + placeholder.getName() + "." + "" +
                         "\nFor this action you have gained some energy." + "" +
                         "\n...and maybe something more.";
 
             } else if (placeholder instanceof Obstacles) { //checks if the player collided with an obstacle
-                ((Player) entity).addTurns(placeholder.getTurnValue());
+                ((Player) entity).addEnergy(placeholder.getEnergy());
                 ((Player) entity).addPollutionValue(placeholder.getPollutionValue());
-                informationString = "You accidentally ate a " + placeholder.getName() + ".";
+                informationString = "You accidentally ate "+placeholder.getArticle()+" " +placeholder.getName() + ".";
 
-                if(((Player) entity).getTurnValue() <= 0){
+                if(((Player) entity).getEnergy() <= 0){
                     ((Player) entity).triggerDeath();
 
                     informationString = "You have eaten too much waste, therefore you have run out of energy.";
@@ -230,7 +180,7 @@ public class Grid {
                 ((Player) entity).addPollutionValue(placeholder.getPollutionValue());
 
                 informationString = "There is nothing.";
-                if(((Player) entity).getTurnValue() <= 0){
+                if(((Player) entity).getEnergy() <= 0){
                     ((Player) entity).triggerDeath();
 
                     informationString = "You have not eaten enough food and have thus run out of energy.";
@@ -243,27 +193,24 @@ public class Grid {
                 ((Player) entity).triggerDeath();
 
                 informationString = "Too bad." +
-                        "\nYou have confronted a " + placeholder.getName() + "." +
+                        "\nYou have confronted "+placeholder.getArticle()+" " + placeholder.getName() + "." +
                         "\nThis action has resulted in your death.";
             }
         } else if (entity instanceof Enemies) { //checks if the entity is an enemy
             if (placeholder instanceof Player) { //checks if the enemy collided with the player
                 ((Player)placeholder).triggerDeath();
                 this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
-                informationString = "Too bad" +
-                        "\nA " + entity.getName() + " has caught you." +
+                informationString = "Too bad." +
+                        "\nYou where caught by "+placeholder.getArticle()+" " + entity.getName()+
                         "\nThis action has resulted in your death.";
                 throw new PlayerIsDeadException("lol");
             } else if(placeholder instanceof Enemies){//checks if the enemy collided with another enemy
                 this.grid[entityPosition.get(0)][entityPosition.get(1)] = placeholder;
-
             }
         }
-
         if(entity instanceof Player) {
             findPlayer().calculateScore();
         }
-
         return informationString;
     }
 
@@ -283,13 +230,8 @@ public class Grid {
                 }
             }
         }
-
         this.grid[getPosition(findPlayer()).get(0)][getPosition(findPlayer()).get(1)]
                 = (Player) grid.getGrid()[position.get(0)][position.get(1)];
-    }
-
-    public GameObjects[][] getGrid() {
-        return grid;
     }
 
     //method that checks if the map needs to refill some elements
@@ -306,7 +248,6 @@ public class Grid {
                 }
             }
         }
-
         //checks how many obstacles there are on the map
         for (int column = 0; column < this.column; column++) {
             for (int row = 0; row < this.grid[column].length; row++) {
@@ -315,8 +256,6 @@ public class Grid {
                 }
             }
         }
-
-        Random decider = new Random();
         //loop that sends new food objects in on the map with the method maintenanceAdder
         for(int i = 0; i < this.foodQuantity - foodCount; i++){
             maintenanceAdder(Food.create(decider.nextInt(2)));
@@ -329,7 +268,6 @@ public class Grid {
     }
 
     private void maintenanceAdder(GameObjects object){
-        Random random = new Random();
 
         //counts how many tiles is water
         int waterCount = 0;
@@ -342,7 +280,7 @@ public class Grid {
         }
 
         //finds a random number between o and how much water there is
-        int count = random.nextInt(waterCount);
+        int count = decider.nextInt(waterCount);
         int placement = 0;
 
         //loops though the grid while counting up to the random number where there is water them placing set object there
@@ -356,5 +294,44 @@ public class Grid {
                 }
             }
         }
+    }
+
+    //Method that gives an objects position
+    public ArrayList<Integer> getPosition(GameObjects entity) {
+
+        //list that's going to get returned
+        ArrayList<Integer> position = new ArrayList<>();
+
+        //checks all positions in the 2D array for the entity
+        for (int column = 0; column < this.grid.length; column++) {
+            for (int row = 0; row < this.grid[column].length; row++) {
+                if (this.grid[row][column] == entity) {
+                    position.add(row);
+                    position.add(column);
+                    break;
+                }
+            }
+        }
+        return position;
+    }
+
+    //Method that finds all Enemies and returns them in an Arraylist
+    public ArrayList<Enemies> getAllEnemies(){
+        //crates the arraylist
+        ArrayList<Enemies> enemies = new ArrayList<>();
+
+        //loops through the grid, looking for enemies
+        for (int column = 0; column < this.grid.length; column++) {
+            for (int row = 0; row < this.grid[column].length; row++) {
+                if (this.grid[row][column] instanceof Enemies) {
+                    enemies.add((Enemies) this.grid[row][column]);
+                }
+            }
+        }
+        return enemies;
+    }
+
+    public GameObjects[][] getGrid() {
+        return grid;
     }
 }

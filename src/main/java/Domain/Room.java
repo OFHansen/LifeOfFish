@@ -9,6 +9,7 @@ public class Room {
     private int scoreToNextLevel;
     private Grid grid;
     private static int roomCount = 0;
+
     //The following code describes the difficulty and size of the individual levels.
     //The first two integers determine the grid size.
     //The third integer determines the quantity of enemies

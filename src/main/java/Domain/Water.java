@@ -3,7 +3,7 @@ package Domain;
 public class Water extends GameObjects{
     //Constructor
     public Water(){
-        super("water", 0,"≋", 1);
+        super("water", 0, 1,"");
     }
 
     //Methods

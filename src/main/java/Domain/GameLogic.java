@@ -1,7 +1,5 @@
 package Domain;
 
-import javafx.scene.control.Label;
-
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,6 +14,8 @@ public class GameLogic {
     public GameLogic() {
         createRooms();
     }
+
+    //Methods
 
     //Method to create rooms, and set keyword for next room
     public void createRooms() {
@@ -40,13 +40,10 @@ public class GameLogic {
     //Movement for player
     public String goInGrid(String direction) throws PlayerIsDeadException, IllegalMoveException {
        return movement(direction);
-
     }
 
-
-
     //Method to change room
-    public String goRoom() {
+    public String goToNextRoom() {
 
         //Makes placeholder of current grid
         Grid placeholder = currentRoom.getMap();
@@ -65,10 +62,6 @@ public class GameLogic {
         roomCount = 0;
     }
 
-
-    //Sets quit to true, unless player wrote secondword with quit
-
-
     //method that makes all enemies move
     public void enemyTurn() throws PlayerIsDeadException {
         //finds all enemies
@@ -83,7 +76,7 @@ public class GameLogic {
             } catch (IllegalMoveException e) {// if that fails it tries again but only limited times
                 tries++;
             } finally { //controls if the one enemy has tried to many times
-                if (tries > 9) {
+                if (tries > 4) {
                     i++;
                     tries = 0;
                 }
@@ -93,18 +86,19 @@ public class GameLogic {
 
     private String enemyAI(Enemies enemy) {
         Random choiceMaker = new Random();
-        //finds the players position
-        ArrayList<Integer> playerPosition = currentRoom.getMap().getPosition(findPlayer());
         int move = 0;
 
-        //gets the position of the enemy
-        ArrayList<Integer> enemyPosition = currentRoom.getMap().getPosition(enemy);
-
-        //2 variables sh
-        int moveableX = playerPosition.get(0) - enemyPosition.get(0);
-        int moveableY = playerPosition.get(1) - enemyPosition.get(1);
-
         if (choiceMaker.nextBoolean()) {// 50/50 chance to make a good move or random
+            //finds the players position
+            ArrayList<Integer> playerPosition = currentRoom.getMap().getPosition(findPlayer());
+
+            //gets the position of the enemy
+            ArrayList<Integer> enemyPosition = currentRoom.getMap().getPosition(enemy);
+
+            //2 variables
+            int moveableX = playerPosition.get(0) - enemyPosition.get(0);
+            int moveableY = playerPosition.get(1) - enemyPosition.get(1);
+
             if (moveableY != 0) { //moves enemy on the y-axis if it's not equal to players y-value
                 if (moveableY > 0) {
                     move = 0;
@@ -117,9 +111,9 @@ public class GameLogic {
                 } else {
                     move = 3;
                 }
-            } else { // moves randomly
-                move = choiceMaker.nextInt(3);
             }
+        }else { // moves randomly
+            move = choiceMaker.nextInt(3);
         }
         //creates the string
         String enemyMove = null;
@@ -136,20 +130,12 @@ public class GameLogic {
         return enemyMove;
     }
 
-    public static int[] getScoreToNextLevel() {
-        return scoreToNextLevel;
-    }
-
     public static int getRoomCount() {
         return roomCount;
     }
 
     public int scoreToNextLevel() {
         return currentRoom.scoreToNextLevel();
-    }
-
-    public void PrintMap() {
-        currentRoom.getMap().printGrid();
     }
 
     public GameObjects[][] getMap(){return currentRoom.getMap().getGrid();}
@@ -168,8 +154,12 @@ public class GameLogic {
         return findPlayer().getTotalTurns();
     }
 
-    public int getPlayerTurns() {
-        return findPlayer().getTurns();
+    public int getPlayerEnergy() {
+        return findPlayer().getEnergy();
+    }
+
+    public int getPlayerPollutionValue(){
+        return findPlayer().getPollutionValue();
     }
 
     public int getPlayerScore() {
@@ -200,15 +190,5 @@ public class GameLogic {
         }
 
         return placeholder;
-    }
-
-    public static void main(String[] args) {
-        GameLogic game = new GameLogic();
-
-        ArrayList<BufferedImage> test = game.listOfImages();
-
-        for(int i = 0; i<test.size(); i++){
-            System.out.println(test.get(i));
-        }
     }
 }
