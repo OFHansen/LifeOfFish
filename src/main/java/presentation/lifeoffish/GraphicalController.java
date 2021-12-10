@@ -296,7 +296,7 @@ public class GraphicalController implements Initializable {
 
     }
 
-    //....
+    //credit to Dan (https://stackoverflow.com/questions/30970005/bufferedimage-to-javafx-image)
     private static Image convertToFxImage(BufferedImage image) {
         WritableImage wr = null;
         if (image != null) {

@@ -23,7 +23,7 @@ public class HighScore implements Serializable {
         this.score = score;
         this.totalTurns = totalTurns;
         this.pollutionValue = pollutionValue;
-        //....
+        //credit to dimoniy (https://stackoverflow.com/questions/23068676/how-to-get-current-timestamp-in-string-format-in-java-yyyy-mm-dd-hh-mm-ss)
         this.time = new SimpleDateFormat("HH:mm dd/MM/yyyy").format(new Date());
     }
 
