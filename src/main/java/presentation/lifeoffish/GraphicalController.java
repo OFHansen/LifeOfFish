@@ -325,19 +325,18 @@ public class GraphicalController implements Initializable {
     }
 
     public void updateText(){
-        stats.setText("Score: " + game.getPlayerScore() + "/" +game.scoreToNextLevel()+
-                "\nPollution value: " + game.getPlayerPollutionValue() +
-                "\nEnergy: " + game.getPlayerTurns() +
-                "\nTotal turns: "+ game.getPlayerTotalTurns() +
+        stats.setText("Score: " + game.findPlayer().getScore() + "/" +game.scoreToNextLevel()+
+                "\nPollution value: " + game.findPlayer().getPollutionValue() +
+                "\nEnergy: " + game.findPlayer().getTurnValue() +
+                "\nTotal turns: "+ game.findPlayer().getTotalTurns() +
                 "\nCurrent level: " + currentLevelString);
 
-        statsEnd.setText("Your fish lived through "+GameLogic.getRoomCount()+ " decade(s)" +
+        statsEnd.setText("Your fish lived through "+GameLogic.getRoomCount()+ " decades" +
                 "\nWhile your fish tried to survive, the filthy humans were destroying the ocean!"+
-                "\nThat resulted in your fish getting\na pollution value of: "+game.getPlayerPollutionValue() +
-                "\nWould you like to eat that fish?"+
-                "\nYour final score and total turn is:"+
-                "\nFinal score: " + game.getPlayerScore() +
-                "\nTotal turns: "+ game.getPlayerTotalTurns());
+                "\nThat resulted in your fish getting a pollution value of: "+game.findPlayer().getPollutionValue() +
+                "\nRemember that when you buy products from the fishing industry."+
+                "\nTotal score: " + game.findPlayer().getScore() +
+                "\nTotal turns: "+ game.findPlayer().getTotalTurns());
 
 
     }
